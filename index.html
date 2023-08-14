@@ -27,120 +27,698 @@
       switchTab();
       window.addEventListener('hashchange', switchTab, false);
   })();
-  </script><!-- hexo injector head_end end --><meta name="generator" content="Hexo 6.2.0"></head><body class="is-2-column"><nav class="navbar navbar-main"><div class="container navbar-container"><div class="navbar-brand justify-content-center"><a class="navbar-item navbar-logo" href="/"><img src="/img/logo.svg" alt="胡乱折腾" height="28"></a></div><div class="navbar-menu"><div class="navbar-start"><a class="navbar-item is-active" href="/">主页</a><a class="navbar-item" href="/archives">存档</a><a class="navbar-item" href="/categories">分类</a><a class="navbar-item" href="/tags">标签</a><a class="navbar-item" href="/about">关于</a></div><div class="navbar-end"><a class="navbar-item" target="_blank" rel="noopener" title="GitHub" href="https://github.com/tux0529"><i class="fab fa-github"></i></a><a class="navbar-item search" title="搜索" href="javascript:;"><i class="fas fa-search"></i></a></div></div></div></nav><section class="section"><div class="container"><div class="columns"><div class="column order-2 column-main is-8-tablet is-8-desktop is-8-widescreen"><div class="card"><article class="card-content article" role="article"><div class="article-meta is-size-7 is-uppercase level is-mobile"><div class="level-left"><span class="level-item"><time dateTime="2023-08-02T12:23:25.000Z" title="2023/8/2 20:23:25">2023-08-02</time>发表</span><span class="level-item"><time dateTime="2023-08-02T12:32:35.000Z" title="2023/8/2 20:32:35">2023-08-02</time>更新</span><span class="level-item"><a class="link-muted" href="/categories/%E5%A4%87%E5%BF%98%E5%BD%95/">备忘录</a></span><span class="level-item">1 分钟读完 (大约221个字)</span></div></div><h1 class="title is-3 is-size-4-mobile"><a class="link-muted" href="/2023/08/02/xcode-command-line-tools/">Xcode命令行工具Command Line Tools</a></h1><div class="content"><p>一般Xcode安装后，第一次打开时，会弹窗提示安装Command Line Tools，直接安装即可。</p>
-<p>如果当时没有安装，后面也可以单独安装。</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">xcode-select --install	// 安装命令</span><br><span class="line"></span><br><span class="line">xcode-select --version	// 查看版本</span><br></pre></td></tr></table></figure>
-
-<p>有时Command Line Tools出了问题，可以先尝试恢复默认设置来解决：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">// 恢复默认设置（需要sudo权限）</span><br><span class="line">sudo xcode-select --reset</span><br></pre></td></tr></table></figure>
-
-<p>还是解决不了，可以考虑删掉后重新安装：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">// 强制删除安装目录下的文件</span><br><span class="line">sudo rm -rf /Library/Developer/CommandLineTools</span><br><span class="line"></span><br><span class="line">// 重新安装</span><br><span class="line">xcode-select --install</span><br></pre></td></tr></table></figure>
-
-<p>除了终端命令的安装方式，也可以到<a target="_blank" rel="noopener" href="https://developer.apple.com/download/more/">苹果开发者官网的下载专区</a>搜索Command Line Tools并下载安装包。你也可以去<a target="_blank" rel="noopener" href="https://xcodereleases.com/">xcodereleases</a>网站找到各种版本Xcode的下载链接。</p>
-</div></article></div><div class="card"><article class="card-content article" role="article"><div class="article-meta is-size-7 is-uppercase level is-mobile"><div class="level-left"><span class="level-item"><time dateTime="2022-08-11T10:05:05.000Z" title="2022/8/11 18:05:05">2022-08-11</time>发表</span><span class="level-item"><time dateTime="2022-08-11T10:05:05.000Z" title="2022/8/11 18:05:05">2022-08-11</time>更新</span><span class="level-item"><a class="link-muted" href="/categories/Qt/">Qt</a></span><span class="level-item">2 分钟读完 (大约300个字)</span></div></div><h1 class="title is-3 is-size-4-mobile"><a class="link-muted" href="/2022/08/11/Qt/qt-sqlite-image/">Qt生成缩略图片存入sqlite</a></h1><div class="content"><h2 id="Qt生成缩略图片存入sqlite"><a href="#Qt生成缩略图片存入sqlite" class="headerlink" title="Qt生成缩略图片存入sqlite"></a>Qt生成缩略图片存入sqlite</h2><p>新建一个工程pro文件中加入 <code>QT  += sql</code>  添加sql支持。</p>
-<figure class="highlight cpp"><figcaption><span>>folded</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// main.cpp</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;QApplication&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;QtGui&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;QSqlDatabase&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;QSqlError&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;QSqlQuery&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">(<span class="type">int</span> argc, <span class="type">char</span> *argv[])</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="function">QApplication <span class="title">a</span><span class="params">(argc, argv)</span></span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//添加数据库,不表</span></span><br><span class="line">    QSqlDatabase db = QSqlDatabase::<span class="built_in">addDatabase</span>(<span class="string">&quot;QSQLITE&quot;</span>, <span class="string">&quot;conn1&quot;</span>);</span><br><span class="line">    db.<span class="built_in">setDatabaseName</span>(<span class="string">&quot;/home/htux/thumbs.sqlite&quot;</span>);</span><br><span class="line">    <span class="keyword">if</span>(!db.<span class="built_in">open</span>())  <span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line"></span><br><span class="line">    QByteArray baImage;</span><br><span class="line"></span><br><span class="line">    QString filename = <span class="string">&quot;/home/htux/file2.jpg&quot;</span>;</span><br><span class="line">    <span class="function">QPixmap <span class="title">pixmapIn</span><span class="params">(filename)</span></span>;</span><br><span class="line"></span><br><span class="line">    <span class="function">QBuffer <span class="title">buffer</span><span class="params">(&amp;baImage)</span></span>;</span><br><span class="line">    buffer.<span class="built_in">open</span>(QIODevice::WriteOnly);</span><br><span class="line"></span><br><span class="line">    QPixmap pixmapSmall;</span><br><span class="line">    <span class="comment">//让生成的缩略图高宽都不超过256.</span></span><br><span class="line">    pixmapSmall = pixmapIn.<span class="built_in">scaled</span>(<span class="number">256</span>,<span class="number">256</span>,</span><br><span class="line">                  Qt::KeepAspectRatio, Qt::SmoothTransformation);</span><br><span class="line">    <span class="comment">//保存生成的缩略图到ByteArray, 格式为JPG, 图片质量50.</span></span><br><span class="line">    <span class="comment">//图片质量的取值Qt文档中没查到,不过按照国际惯例应该是0-100</span></span><br><span class="line">    <span class="comment">//保存几个不同质量的图片看看差别</span></span><br><span class="line">    pixmapSmall.<span class="built_in">save</span>(&amp;buffer, <span class="string">&quot;JPG&quot;</span>,<span class="number">50</span>);</span><br><span class="line">    pixmapSmall.<span class="built_in">save</span>(<span class="string">&quot;/home/htux/file2.png&quot;</span>, <span class="string">&quot;PNG&quot;</span>);</span><br><span class="line">    pixmapSmall.<span class="built_in">save</span>(<span class="string">&quot;/home/htux/file2-5.jpg&quot;</span>, <span class="string">&quot;JPG&quot;</span>, <span class="number">20</span>);</span><br><span class="line">    pixmapSmall.<span class="built_in">save</span>(<span class="string">&quot;/home/htux/file2-5.jpg&quot;</span>, <span class="string">&quot;JPG&quot;</span>, <span class="number">50</span>);</span><br><span class="line">    pixmapSmall.<span class="built_in">save</span>(<span class="string">&quot;/home/htux/file2-8.jpg&quot;</span>, <span class="string">&quot;JPG&quot;</span>, <span class="number">80</span>);</span><br><span class="line"></span><br><span class="line">    <span class="function">QSqlQuery <span class="title">query</span><span class="params">(db)</span></span>;</span><br><span class="line"></span><br><span class="line">    query.<span class="built_in">exec</span>(<span class="string">&quot;CREATE TABLE thumbs &quot;</span></span><br><span class="line">                <span class="string">&quot;(id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,&quot;</span></span><br><span class="line">                <span class="string">&quot; filename VCHAR(20) , thumbnail BLOB);&quot;</span>);</span><br><span class="line"></span><br><span class="line">    QString sql = <span class="built_in">QString</span>(<span class="string">&quot;INSERT INTO thumbs VALUES &quot;</span></span><br><span class="line">                <span class="string">&quot;( NULL , :filename, :thumbnail );&quot;</span>);</span><br><span class="line"></span><br><span class="line">    query.<span class="built_in">prepare</span>(sql);</span><br><span class="line">    query.<span class="built_in">bindValue</span>(<span class="string">&quot;:filename&quot;</span>, filename);</span><br><span class="line">    query.<span class="built_in">bindValue</span>(<span class="string">&quot;:thumbnail&quot;</span>, baImage);</span><br><span class="line"></span><br><span class="line">    query.<span class="built_in">exec</span>();</span><br><span class="line"></span><br><span class="line">    query.<span class="built_in">exec</span>(<span class="string">&quot;select * from thumbs;&quot;</span>);</span><br><span class="line"></span><br><span class="line">    <span class="comment">//跳到最后存入的记录</span></span><br><span class="line">    <span class="keyword">if</span> (!query.<span class="built_in">last</span>())  <span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line"></span><br><span class="line">    QPixmap pixmapOut;</span><br><span class="line">    <span class="comment">//读出存入的图片</span></span><br><span class="line">    pixmapOut.<span class="built_in">loadFromData</span>(query.<span class="built_in">value</span>(<span class="number">2</span>).<span class="built_in">toByteArray</span>());</span><br><span class="line"></span><br><span class="line">    db.<span class="built_in">close</span>();</span><br><span class="line">    <span class="comment">//把图片用Label显示出来.</span></span><br><span class="line">    QLabel label;</span><br><span class="line">    label.<span class="built_in">setPixmap</span>(pixmapOut);</span><br><span class="line">    label.<span class="built_in">show</span>();</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> a.<span class="built_in">exec</span>();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-</div></article></div><div class="card"><article class="card-content article" role="article"><div class="article-meta is-size-7 is-uppercase level is-mobile"><div class="level-left"><span class="level-item"><time dateTime="2022-08-11T09:59:22.000Z" title="2022/8/11 17:59:22">2022-08-11</time>发表</span><span class="level-item"><time dateTime="2022-08-11T09:59:22.000Z" title="2022/8/11 17:59:22">2022-08-11</time>更新</span><span class="level-item"><a class="link-muted" href="/categories/Qt/">Qt</a></span><span class="level-item">3 分钟读完 (大约506个字)</span></div></div><h1 class="title is-3 is-size-4-mobile"><a class="link-muted" href="/2022/08/11/Qt/qt-qlineedit-focus/">QLineEdit获取焦点后全选字符/失去焦点清除选择</a></h1><div class="content"><p>一直觉得Chrome的地址栏的体验非常好，获取焦点后自动全选，无论是想复制地址还是重新输入新的地址都帮我们省掉了一步，如何用QLineEdit实现这个特点呢。</p>
-<p>网上搜索了一下，发现一篇博客<a target="_blank" rel="noopener" href="http://www.cnblogs.com/91program/p/5521420.html">http://www.cnblogs.com/91program/p/5521420.html</a> ，但是这篇博客讲述的方法有点复杂，最后还要通过延时来达到目的，有点怪异。</p>
-<p>最后只得查看QLineEdit的类参考仿照Chrome实现，Chrome的地址栏在无焦点状态下鼠标按下不动的时候，地址栏获取了焦点，光标位于鼠标位置；鼠标无移动释放，全选地址栏字符；再次单击，清除全选；鼠标按下移动后释放，则不会全选，而是选择字符；地址栏失去焦点，清除选择。</p>
-<p>看起来我们需要判断鼠标按下时的位置与鼠标释放时鼠标有没有移动，申请一个变量m_pressPos来存储鼠标按下时的位置。还需要知道鼠标单击的时候QLineEdit是否已获得焦点，我们用变量m_onFocus来记录。定义一个QLineEdit子类，然后重新实现mousePressEvent，mouseReleaseEvent，focusOutEvent。</p>
-<p>代码如下：</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">ifndef</span> URLLINEEDIT_H</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> URLLINEEDIT_H</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;QLineEdit&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">UrlLineEdit</span> : <span class="keyword">public</span> QLineEdit</span><br><span class="line">&#123;</span><br><span class="line">    Q_OBJECT</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="built_in">UrlLineEdit</span>(QWidget *parent = <span class="number">0</span>);</span><br><span class="line">    ~<span class="built_in">UrlLineEdit</span>();</span><br><span class="line"><span class="keyword">protected</span>:</span><br><span class="line">    <span class="function"><span class="type">void</span> <span class="title">mouseReleaseEvent</span><span class="params">(QMouseEvent *e)</span></span>;</span><br><span class="line">    <span class="function"><span class="type">void</span> <span class="title">mousePressEvent</span><span class="params">(QMouseEvent *e)</span></span>;</span><br><span class="line">    <span class="function"><span class="type">void</span> <span class="title">focusOutEvent</span><span class="params">( QFocusEvent * e )</span></span>;</span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">    <span class="type">bool</span> m_onFocus;</span><br><span class="line">    QPoint m_pressPos;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="meta">#<span class="keyword">endif</span> <span class="comment">// URLLINEEDIT_H</span></span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&quot;urllineedit.h&quot;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;QFocusEvent&gt;</span></span></span><br><span class="line"></span><br><span class="line">UrlLineEdit::<span class="built_in">UrlLineEdit</span>(QWidget *parent)</span><br><span class="line">    :<span class="built_in">QLineEdit</span>(parent),</span><br><span class="line">      <span class="built_in">m_onFocus</span>(<span class="literal">false</span>)</span><br><span class="line">&#123;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">UrlLineEdit::~<span class="built_in">UrlLineEdit</span>()</span><br><span class="line">&#123;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">UrlLineEdit::mouseReleaseEvent</span><span class="params">(QMouseEvent *e)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (e-&gt;<span class="built_in">button</span>() == Qt::LeftButton )&#123;</span><br><span class="line">        <span class="keyword">if</span>( e-&gt;<span class="built_in">pos</span>() == m_pressPos &amp;&amp; !m_onFocus)&#123;</span><br><span class="line">            m_onFocus = <span class="literal">true</span>;</span><br><span class="line">            <span class="built_in">selectAll</span>();</span><br><span class="line">            <span class="built_in">update</span>();</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="type">int</span> start = <span class="built_in">cursorPositionAt</span>(m_pressPos);</span><br><span class="line">            <span class="built_in">setSelection</span>( start , <span class="built_in">cursorPositionAt</span>(e-&gt;<span class="built_in">pos</span>())-start );</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    QLineEdit::<span class="built_in">mouseReleaseEvent</span>(e);</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">UrlLineEdit::mousePressEvent</span><span class="params">(QMouseEvent *e)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (e-&gt;<span class="built_in">button</span>() == Qt::LeftButton)&#123;</span><br><span class="line">        m_pressPos = e-&gt;<span class="built_in">pos</span>();</span><br><span class="line">        <span class="built_in">setCursorPosition</span>(<span class="built_in">cursorPositionAt</span>(m_pressPos));</span><br><span class="line">    &#125;</span><br><span class="line">    QLineEdit::<span class="built_in">mousePressEvent</span>(e);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">UrlLineEdit::focusOutEvent</span><span class="params">(QFocusEvent *e)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    m_onFocus = <span class="literal">false</span>;</span><br><span class="line">    <span class="keyword">if</span>(!<span class="built_in">hasSelectedText</span>())&#123;</span><br><span class="line">        <span class="built_in">deselect</span>();</span><br><span class="line">    &#125;</span><br><span class="line">    QLineEdit::<span class="built_in">focusOutEvent</span>(e);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>通过测试基本上是实现了类似Chrome的这个特性。</p>
-</div></article></div><div class="card"><article class="card-content article" role="article"><div class="article-meta is-size-7 is-uppercase level is-mobile"><div class="level-left"><span class="level-item"><time dateTime="2022-08-10T12:46:25.000Z" title="2022/8/10 20:46:25">2022-08-10</time>发表</span><span class="level-item"><time dateTime="2022-08-11T08:52:26.000Z" title="2022/8/11 16:52:26">2022-08-11</time>更新</span><span class="level-item"><a class="link-muted" href="/categories/%E5%A4%87%E5%BF%98%E5%BD%95/">备忘录</a></span><span class="level-item">9 分钟读完 (大约1371个字)</span></div></div><h1 class="title is-3 is-size-4-mobile"><a class="link-muted" href="/2022/08/10/macOS-helper/">macOS系统使用技巧</a></h1><div class="content"><h2 id="1-tree命令"><a href="#1-tree命令" class="headerlink" title="1.tree命令"></a>1.tree命令</h2><h3 id="自定义"><a href="#自定义" class="headerlink" title="自定义"></a>自定义</h3><p>mac下默认是没有 tree命令的，不过我们可以使用find命令模拟出tree命令的效果，如显示当前目录的 tree 的命令：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ find . -print | sed -e &#x27;s;[^/]*/;|____;g;s;____|; |;g&#x27;</span><br></pre></td></tr></table></figure>
-
-<p>当然你也可以写一个别名来快速执行该命令，运行如下命令，将上面这个命令写到~&#x2F;.bash_profile里，以后直接运行tree命令就更方便了:</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">alias tree=&quot;find . -print | sed -e &#x27;s;[^/]*/;|____;g;s;____|; |;g&#x27;&quot;</span><br></pre></td></tr></table></figure>
-
-<h3 id="安装tree命令行工具"><a href="#安装tree命令行工具" class="headerlink" title="安装tree命令行工具"></a>安装tree命令行工具</h3><p>也可以使用 homebrew 安装 tree 命令行：<code>brew install tree</code></p>
-<p>这样就在你的mac上安装了 tree 命令行了。</p>
-<p>tree命令行参数（只实用与安装了tree命令行工具）：</p>
-<ul>
-<li>-a 显示所有文件和目录。</li>
-<li>-A 使用ASNI绘图字符显示树状图而非以ASCII字符组合。</li>
-<li>-C 在文件和目录清单加上色彩，便于区分各种类型。</li>
-<li>-d 显示目录名称而非内容。</li>
-<li>-D 列出文件或目录的更改时间。</li>
-<li>-f 在每个文件或目录之前，显示完整的相对路径名称。</li>
-<li>-F 在执行文件，目录，Socket，符号连接，管道名称名称，各自加上”*”,”&#x2F;“,”&#x3D;”,”@”,”|”号。</li>
-<li>-g 列出文件或目录的所属群组名称，没有对应的名称时，则显示群组识别码。</li>
-<li>-i 不以阶梯状列出文件或目录名称。</li>
-<li>-I 不显示符合范本样式的文件或目录名称。</li>
-<li>-l 如遇到性质为符号连接的目录，直接列出该连接所指向的原始目录。</li>
-<li>-n 不在文件和目录清单加上色彩。</li>
-<li>-N 直接列出文件和目录名称，包括控制字符。</li>
-<li>-p 列出权限标示。</li>
-<li>-P 只显示符合范本样式的文件或目录名称。</li>
-<li>-q 用”?”号取代控制字符，列出文件和目录名称。</li>
-<li>-s 列出文件或目录大小。</li>
-<li>-t 用文件和目录的更改时间排序。</li>
-<li>-u 列出文件或目录的拥有者名称，没有对应的名称时，则显示用户识别码。</li>
-<li>-x 将范围局限在现行的文件系统中，若指定目录下的某些子目录，其存放于另一个文件系统上，则将该子目录予以排除在寻找范围外。</li>
-</ul>
-<h2 id="2-改变APP图标"><a href="#2-改变APP图标" class="headerlink" title="2.改变APP图标"></a>2.改变APP图标</h2><p>最近发现有些APP图标实在是难看，忍不住想换个标，就在网上查了下资料，MacOS系统提供了生成icns的命令，我们需要准备一张png的图，这张图最小要1024*1024的分辨率。</p>
-<h3 id="制作步骤："><a href="#制作步骤：" class="headerlink" title="制作步骤："></a>制作步骤：</h3><ol>
-<li><p>找图<br>找一张分辨率1024*1024的png图片</p>
-</li>
-<li><p>建图片集目录<br>打开终端输入以下命令：<br><code>mkdir xxx. iconset</code><br>注意：必须以.iconset后缀结尾</p>
-</li>
-<li><p>转换图片<br>把原图片转为不同大小的图片，并放入上面的创建的目录中<br>sips -z 16 16     pic.png –out xxx.iconset&#x2F;icon_16x16.png<br>sips -z 32 32     pic.png –out xxx.iconset&#x2F;<a href="mailto:&#x69;&#99;&#x6f;&#110;&#x5f;&#49;&#54;&#120;&#x31;&#54;&#64;&#x32;&#120;&#x2e;&#112;&#x6e;&#x67;">&#x69;&#99;&#x6f;&#110;&#x5f;&#49;&#54;&#120;&#x31;&#54;&#64;&#x32;&#120;&#x2e;&#112;&#x6e;&#x67;</a><br>sips -z 32 32     pic.png –out xxx.iconset&#x2F;icon_32x32.png<br>sips -z 64 64     pic.png –out xxx.iconset&#x2F;<a href="mailto:&#x69;&#99;&#x6f;&#x6e;&#x5f;&#51;&#50;&#x78;&#x33;&#x32;&#x40;&#50;&#120;&#46;&#x70;&#110;&#x67;">&#x69;&#99;&#x6f;&#x6e;&#x5f;&#51;&#50;&#x78;&#x33;&#x32;&#x40;&#50;&#120;&#46;&#x70;&#110;&#x67;</a><br>sips -z 128 128   pic.png –out xxx.iconset&#x2F;icon_128x128.png<br>sips -z 256 256   pic.png –out xxx.iconset&#x2F;<a href="mailto:&#105;&#x63;&#x6f;&#x6e;&#x5f;&#49;&#50;&#x38;&#x78;&#49;&#x32;&#56;&#x40;&#50;&#120;&#x2e;&#x70;&#x6e;&#x67;">&#105;&#x63;&#x6f;&#x6e;&#x5f;&#49;&#50;&#x38;&#x78;&#49;&#x32;&#56;&#x40;&#50;&#120;&#x2e;&#x70;&#x6e;&#x67;</a><br>sips -z 256 256   pic.png –out xxx.iconset&#x2F;icon_256x256.png<br>sips -z 512 512   pic.png –out xxx.iconset&#x2F;<a href="mailto:&#105;&#x63;&#111;&#110;&#95;&#50;&#x35;&#x36;&#120;&#x32;&#53;&#54;&#64;&#x32;&#x78;&#46;&#112;&#110;&#x67;">&#105;&#x63;&#111;&#110;&#95;&#50;&#x35;&#x36;&#120;&#x32;&#53;&#54;&#64;&#x32;&#x78;&#46;&#112;&#110;&#x67;</a><br>sips -z 512 512   pic.png –out xxx.iconset&#x2F;icon_512x512.png<br>sips -z 1024 1024   pic.png –out xxx.iconset&#x2F;<a href="mailto:&#x69;&#x63;&#x6f;&#x6e;&#x5f;&#53;&#49;&#50;&#x78;&#53;&#49;&#x32;&#x40;&#x32;&#120;&#x2e;&#112;&#110;&#x67;">&#x69;&#x63;&#x6f;&#x6e;&#x5f;&#53;&#49;&#50;&#x78;&#53;&#49;&#x32;&#x40;&#x32;&#120;&#x2e;&#112;&#110;&#x67;</a><br>@2x 的是为retina屏准备的，以上命令执行完后去目录里看下图片是否生成好了</p>
-</li>
-<li><p>生成图标<br>这一步就是制作icns的最后一步了<br>在命令行中输入一下命令<br>iconutil -c icns xxx.iconset -o xxx.icns<br>这时，目录中就会出现你要的icns图标文件了</p>
-</li>
-<li><p>替换图标<br>在应用程序中找到想要替换的APP，右键，显示简介，然后把刚才的icns文件拖到简介里就可以了，替换完了之后需要把APP退出后才能看到新的图标。</p>
-</li>
+  </script><!-- hexo injector head_end end --><meta name="generator" content="Hexo 6.2.0"></head><body class="is-2-column"><nav class="navbar navbar-main"><div class="container navbar-container"><div class="navbar-brand justify-content-center"><a class="navbar-item navbar-logo" href="/"><img src="/img/logo.svg" alt="胡乱折腾" height="28"></a></div><div class="navbar-menu"><div class="navbar-start"><a class="navbar-item is-active" href="/">主页</a><a class="navbar-item" href="/archives">存档</a><a class="navbar-item" href="/categories">分类</a><a class="navbar-item" href="/tags">标签</a><a class="navbar-item" href="/about">关于</a></div><div class="navbar-end"><a class="navbar-item" target="_blank" rel="noopener" title="GitHub" href="https://github.com/tux0529"><i class="fab fa-github"></i></a><a class="navbar-item search" title="搜索" href="javascript:;"><i class="fas fa-search"></i></a></div></div></div></nav><section class="section"><div class="container"><div class="columns"><div class="column order-2 column-main is-8-tablet is-8-desktop is-8-widescreen"><div class="card"><article class="card-content article" role="article"><div class="article-meta is-size-7 is-uppercase level is-mobile"><div class="level-left"><span class="level-item"><time dateTime="2023-08-14T04:10:00.000Z" title="2023/8/14 12:10:00">2023-08-14</time>发表</span><span class="level-item"><time dateTime="2023-08-14T04:10:40.617Z" title="2023/8/14 12:10:40">2023-08-14</time>更新</span><span class="level-item"><a class="link-muted" href="/categories/%E5%A4%87%E5%BF%98%E5%BD%95/">备忘录</a></span><span class="level-item">11 分钟读完 (大约1606个字)</span></div></div><h1 class="title is-3 is-size-4-mobile"><a class="link-muted" href="/2023/08/14/windows-office-kms/">Microsoft Office及Windows的KMS激活步骤</a></h1><div class="content"><h2 id="Microsoft-Office-KMS激活步骤："><a href="#Microsoft-Office-KMS激活步骤：" class="headerlink" title="Microsoft Office KMS激活步骤："></a>Microsoft Office KMS激活步骤：</h2><ol>
+<li>以管理员用户打开命令行工具；</li>
+<li>切换到office的安装目录，例如office2016安装路径为`C:\Program Files\Microsoft Office\Office16`；</li>
+<li>设置kms服务器：`cscript ospp.vbs &#x2F;sethst:<a target="_blank" rel="noopener" href="http://kms.03k.org/">kms.03k.org</a>`，返回信息；</li>
 </ol>
-<h3 id="批量制作"><a href="#批量制作" class="headerlink" title="批量制作"></a>批量制作</h3><p>可以把制作过程写成一个shell文件，保存成.sh文件，这样就可以批量生成不同大小的图片并执行iconutil命令</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line">#!/bin/sh</span><br><span class="line">if [ x&quot;$1&quot; = x ]; then</span><br><span class="line">    echo &quot;\033[31m 请输入要转换的图片全名(PNG格式的图片) \033[0m&quot;</span><br><span class="line">    exit</span><br><span class="line">fi</span><br><span class="line">echo $1</span><br><span class="line">newstr=$(tr &#x27;[A-Z]&#x27; &#x27;[a-z]&#x27; &lt;&lt;&lt;&quot;$1&quot;)</span><br><span class="line">if [[ $newstr != *.png ]]; then</span><br><span class="line">    echo &quot;\033[31m 图片不是png格式 \033[0m&quot;</span><br><span class="line">    exit</span><br><span class="line">fi</span><br><span class="line"></span><br><span class="line">if [ x&quot;$2&quot; = x ]; then</span><br><span class="line">    echo &quot;\033[31m 请输入iconset目录(命名方式xxx.iconset, 务必以 .iconset 结尾) \033[0m&quot;</span><br><span class="line">    exit</span><br><span class="line">fi</span><br><span class="line"></span><br><span class="line">if [[ $2 != *.iconset ]]; then</span><br><span class="line">    echo &quot;\033[31m iconset目录命令不规范 \033[0m&quot;</span><br><span class="line">    exit</span><br><span class="line">fi</span><br><span class="line"># 生成的图片名</span><br><span class="line">name_array=(&quot;icon_16x16.png&quot; &quot;icon_16x16@2x.png&quot; &quot;icon_32x32.png&quot; &quot;icon_32x32@2x.png&quot; &quot;icon_128x128.png&quot; &quot;icon_128x128@2x.png&quot; &quot;icon_256x256.png&quot; &quot;icon_256x256@2x.png&quot; &quot;icon_512x512.png&quot; &quot;icon_512x512@2x.png&quot;)</span><br><span class="line">#尺寸</span><br><span class="line">size_array=(&quot;16&quot; &quot;32&quot; &quot;32&quot; &quot;64&quot; &quot;128&quot; &quot;256&quot; &quot;256&quot; &quot;512&quot; &quot;512&quot; &quot;1024&quot;)</span><br><span class="line"></span><br><span class="line"># 创建 iconset 目录</span><br><span class="line">if [ ! -d $2 ]; then</span><br><span class="line">    mkdir $2</span><br><span class="line">fi</span><br><span class="line"></span><br><span class="line">for ((i = 0; i &lt; $&#123;#name_array[@]&#125;; ++i)); do</span><br><span class="line">    m_dir=$2/$&#123;name_array[i]&#125;</span><br><span class="line">    sips -z $&#123;size_array[i]&#125; $&#123;size_array[i]&#125; $1 --out $m_dir</span><br><span class="line">done</span><br><span class="line"># 生成icns 命令</span><br><span class="line">iconutil -c icns $2 -o $&#123;2%*&quot;.iconset&quot;&#125;.icns</span><br><span class="line"># 生成完之后删除 iconset 文件夹</span><br><span class="line">rm -rf $2;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">\---Processing--------------------------</span><br><span class="line"></span><br><span class="line">\---------------------------------------</span><br><span class="line"></span><br><span class="line">Successfully applied setting.</span><br><span class="line"></span><br><span class="line">\---------------------------------------</span><br><span class="line"></span><br><span class="line">\---Exiting-----------------------------</span><br><span class="line"></span><br></pre></td></tr></table></figure>
 
-<h3 id="图标下载"><a href="#图标下载" class="headerlink" title="图标下载"></a>图标下载</h3><p>当然，你也可以去下载现成的 <a target="_blank" rel="noopener" href="https://links.jianshu.com/go?to=https://macosicons.com/">macOS Big Sur - Replacements Icons</a></p>
-<h3 id="图标还原"><a href="#图标还原" class="headerlink" title="图标还原"></a>图标还原</h3><p>如果想恢复成默认图标，只需要在对应的APP图标上“右键”&gt;“显示简介”，然后选中左上角的图标，按delete键就好了</p>
-</div></article></div><div class="card"><article class="card-content article" role="article"><div class="article-meta is-size-7 is-uppercase level is-mobile"><div class="level-left"><span class="level-item"><time dateTime="2021-07-10T08:46:25.000Z" title="2021/7/10 16:46:25">2021-07-10</time>发表</span><span class="level-item"><time dateTime="2022-08-11T08:55:43.000Z" title="2022/8/11 16:55:43">2022-08-11</time>更新</span><span class="level-item"><a class="link-muted" href="/categories/%E5%A4%87%E5%BF%98%E5%BD%95/">备忘录</a></span><span class="level-item">2 分钟读完 (大约350个字)</span></div></div><h1 class="title is-3 is-size-4-mobile"><a class="link-muted" href="/2021/07/10/ubuntu-server/">Ubuntu Server 18.04常用管理</a></h1><div class="content"><h2 id="1-重启网络服务："><a href="#1-重启网络服务：" class="headerlink" title="1.重启网络服务："></a>1.重启网络服务：</h2><p>   <code>sudo /etc/init.d/networking restart</code></p>
-<p>   或者：</p>
-<p>   <code>service networking restart</code></p>
-<h2 id="2-设置Nameserver（2种方法）："><a href="#2-设置Nameserver（2种方法）：" class="headerlink" title="2.设置Nameserver（2种方法）："></a>2.设置Nameserver（2种方法）：</h2><ul>
-<li>修改<code>/etc/resolv.conf</code>，但此文件会被resolvconf重写，故应该修改resolvconf配置文件<code>/etc/resolvconf/resolv.conf.d/head</code>， 增加：<code>nameserver 202.96.209.133</code></li>
-<li>修改<code>/etc/network/interfaces</code>，DNS对应的参数名为<code>dns-nameservers</code>，这里设置的优先级比上一种方法高。如果两种方法都设置了，则都会出现在&#x2F;etc&#x2F;resolv.conf中。</li>
-</ul>
-<h2 id="3-将用户加入-group："><a href="#3-将用户加入-group：" class="headerlink" title="3.将用户加入 group："></a>3.将用户加入 group：</h2><p><code>usermod -G groupname username</code> (这种会把用户从其他组中去掉，只属于该组)<br>如：<code>usermod -G git git</code> (git只属于git组)</p>
-<p><code>usermod -a -G groupname username</code> (把用户添加到这个组，之前所属组不影响)<br>如：<code>usermod -a -G www git</code> (git属于之前git组，也属于www组)</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">xxx@xxxx:~$ cat /etc/group|grep user1</span><br><span class="line">user1:x:999:user1</span><br><span class="line">xxx@xxxx:~$ cat /etc/group|grep sudo</span><br><span class="line">sudo:x:27:</span><br><span class="line">xxx@xxxx:~$ usermod -G 27 user1</span><br><span class="line">xxx@xxxx:~$ cat /etc/group|grep sudo</span><br><span class="line">sudo:x:27:user1</span><br><span class="line">xxx@xxxx:~$ cat /etc/group|grep user1</span><br><span class="line">user1:x:999:</span><br><span class="line">xxx@xxxx:~$ usermod -a -G 999 user1</span><br><span class="line">xxx@xxxx:~$ cat /etc/group|grep user1</span><br><span class="line">user1:x:999:user1</span><br><span class="line">xxx@xxxx:~$ cat /etc/group|grep sudo</span><br><span class="line">sudo:x:27:user1</span><br></pre></td></tr></table></figure>
-
-
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">xxx@xxxx:~$ useradd -r -m -s /bin/bash -G 27 test1 </span><br></pre></td></tr></table></figure>
-
-<h2 id="4-修改时区和时间："><a href="#4-修改时区和时间：" class="headerlink" title="4.修改时区和时间："></a>4.修改时区和时间：</h2><ol>
-<li><p>首先查看时区：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">redtux@redtux-PC:~$ date -R</span><br><span class="line">Thu, 31 May 2018 00:03:22 +0800</span><br></pre></td></tr></table></figure></li>
-<li><p>修改时区，执行sudo tzselect，按提示选择时区.</p>
-</li>
-<li><p>复制文件到&#x2F;etc目录下 <code>sudo cp /usr/share/zoneinfo/Asia/Shanghai  /etc/localtime</code></p>
-</li>
-<li><p>更新时间  <code>sudo ntpdate time.windows.com</code></p>
-</li>
+<ol start="4">
+<li>激活office：`cscript ospp.vbs &#x2F;act`。</li>
 </ol>
-</div></article></div><div class="card"><article class="card-content article" role="article"><div class="article-meta is-size-7 is-uppercase level is-mobile"><div class="level-left"><span class="level-item"><time dateTime="2018-02-10T04:05:03.000Z" title="2018/2/10 12:05:03">2018-02-10</time>发表</span><span class="level-item"><time dateTime="2022-08-11T09:45:14.000Z" title="2022/8/11 17:45:14">2022-08-11</time>更新</span><span class="level-item"><a class="link-muted" href="/categories/%E5%A4%87%E5%BF%98%E5%BD%95/">备忘录</a></span><span class="level-item">12 分钟读完 (大约1770个字)</span></div></div><h1 class="title is-3 is-size-4-mobile"><a class="link-muted" href="/2018/02/10/skills-password/">让你的各种网络密码无法被人破解</a></h1><div class="content"><h2 id="让你的各种网络密码无法被人破解"><a href="#让你的各种网络密码无法被人破解" class="headerlink" title="让你的各种网络密码无法被人破解"></a>让你的各种网络密码无法被人破解</h2><p>互联网产品各种各样，我们也就拥有了各种各样的帐号密码。网银密码，网站密码等等，大家一般化为了好记，都设置同一个密码，或者很简单的密码。这样就造成自己的帐号被黑客窃取。密码要想不被黑客猜中，有几点非常重要的注意事项</p>
-<p>1、不要靠字典中的单词：如果你的密码可以在单词书中找到，那就和没有一样。黑客们经常借助词典以及词汇的变体测试密码.如果你不属于这一类，他们通常就会放弃。</p>
-<p>2、一个密码绝对不要使用两次：人们喜欢在不同的网站使用同一密码，这可让黑客有了可乘之机。如果你的LinkedIn账户遭泄露，可能没什么损失;但他们会利用该密码尝试你的电子邮箱、银行账户等一切存储资产及重要个人数据的地方。</p>
-<p>3、设置密码短语。密码越长，破解的时间也越长。如果不想让黑客在24小时内能破解你的密码，密码长度应该超过14个字符。因为长密码难于记忆，可考虑用喜欢的电影台词、歌词或一首诗的首字母拼接在一起。</p>
-<p>4、胡乱敲击键盘：对于敏感的账户，格罗斯曼先生建议随机乱敲键盘，并间或敲击Shift和Alt键，然后将结果复制到一个文本，存入一个有密码保护的U盘。</p>
-<p>5、安全存储你的密码。不要将密码放在收件箱或桌面。如果恶意软件感染电脑，你就完蛋了。格罗斯曼先生将密码文件存入加密U盘，使用帐户时，他把这些密码复制粘贴过去。即便黑客利用键盘记录软件，同样无法捕捉到他的密码。科克先生则把密码提示保存一张纸上，把敏感的信息和互联网彻底隔离。</p>
-<p>6、不要依赖密码管理器。密码保护软件可使用户将所有用户名和密码存储在同一区域。有些程序还能为你创建强大的密码，只要你输入主密码，就能帮你自动登录网站。如LastPass、SplashData和AgileBits等等。科克先生认为，即使加密后，密码仍然留在计算机里。如果电脑遭到盗窃，等于丢失所有密码。而且密码管理器不一定靠谱，今年初在阿姆斯特丹举行的安全会议上，黑客们就演示了破解手机密码管理器的技术。</p>
-<p>7、安全问题最好答非所问。网站的验证问题经常问道“你最喜欢什么颜色?”“你在哪所中学就读?”，这些问题的答案局限性太大，很容易在互联网上找到。今年初，一名黑客利用米特？罗姆尼(Mitt Romney)最喜欢的宠物的名字破解其Hotmail和Dropbox帐户。比较安全的做法是密码提示和问题无关。如果安全问题问出生医院的名称，你的回答可以是最喜欢的歌词。</p>
-<p>8、使用不同的浏览器。不同的网络活动要用不同的浏览器。选择一个浏览器做乱七八糟的事情，如浏览网上论坛、新闻网站、博客等不重要的事情。第二个浏览器用于登录网上银行或收发电子邮件。这样浏览器被攻击后，银行帐户就不一定会泄露。Accuvant Labs去年研究发现，在其所调查的火狐、谷歌Chrome及微软Internet Explorer浏览器中，Chrome最安全。</p>
-<p>9、别乱分享你的信息。不要经常利用真实的E-mail地址注册网上帐户。很多“一次性”e-mail地址是最佳选择，如10minutemail.com提供的地址，用户注册、确认在线账户后，这些电子邮件地址会自我销毁。</p>
-<p>10、输入任何密码之前一定要搞清楚你当前访问的地址是你想要访问的地址，特别是现在的应用总喜欢用内置的浏览器打开网址，像微信、各个邮箱客户端，打开的网站并不会显示url地址，这样很容易就会碰到李鬼而没有发现。博主最近邮件收到一封自称是纪委的调查邮件，附件是一张二维码，扫码后转到到网易邮箱登录界面，因为是微信打开的网址，所以没有显示地址，用浏览器打开后发现是李鬼，随便用一个账号密码登录之后显示密码错误，然后就转跳到李逵哪里去了。</p>
-<p><img src="/images/20220811171749.webp" alt="地址访问截图" title="地址访问截图"></p>
-<p>最后分享一下我的密码设置规则：</p>
-<p>我的网络账户被分为3个等级：</p>
-<p>1 普通账户，用在一些普通论坛上，比如某一天搜到一个需要的文件在一个论坛里，但是必须注册账户才能下载，这时候就可以用普通账户，可以选择一个统一的账户名和密码，我的用户名就是redtux，密码是好多年前在一个网站上看到的一句话的首字母缩写。用户名要选择一个不容易重复的，我的这个组合用了10多年了，很多时候在一个网站注册的时候发现用户名已经注册了，我就用我的固定账户密码登录就可以进去了。</p>
-<p>2 知名一点的账户，QQ，微信，百度，网易之类，用普通账户的密码跟对应网站的名字组合，比如网易密码可以是 普通密码@WangYi，你只要记住一个固定的组合规则，登录的时候就自动能生成密码。</p>
-<p>3 涉及财产安全的，银行类，支付宝类的，方法同2，但是生成规则更复杂一点，比如可以加入更多的特殊符号。</p>
-<p>这样子就只要记住一个密码和2种规则，就能保证所有账户的密码都不一样，如果其中一个网站被暴库也能保证其他网站的账号安全。</p>
-</div></article></div></div><div class="column column-left is-4-tablet is-4-desktop is-4-widescreen  order-1"><div class="card widget" data-type="profile"><div class="card-content"><nav class="level"><div class="level-item has-text-centered flex-shrink-1"><div><figure class="image is-128x128 mx-auto mb-2"><img class="avatar" src="/img/avatar.png" alt="胡乱折腾"></figure><p class="title is-size-4 is-block" style="line-height:inherit;">胡乱折腾</p><p class="is-size-6 is-block">生命不息，折腾不止！</p><p class="is-size-6 is-flex justify-content-center"><i class="fas fa-map-marker-alt mr-1"></i><span>China</span></p></div></div></nav><nav class="level is-mobile"><div class="level-item has-text-centered is-marginless"><div><p class="heading">文章</p><a href="/archives"><p class="title">6</p></a></div></div><div class="level-item has-text-centered is-marginless"><div><p class="heading">分类</p><a href="/categories"><p class="title">2</p></a></div></div><div class="level-item has-text-centered is-marginless"><div><p class="heading">标签</p><a href="/tags"><p class="title">3</p></a></div></div></nav><div class="level"><a class="level-item button is-primary is-rounded" href="https://github.com/tux0529" target="_blank" rel="noopener">关注我</a></div><div class="level is-mobile is-multiline"><a class="level-item button is-transparent is-marginless" target="_blank" rel="noopener" title="Github" href="https://github.com/tux0529"><i class="fab fa-github"></i></a><a class="level-item button is-transparent is-marginless" target="_blank" rel="noopener" title="Facebook" href="https://facebook.com"><i class="fab fa-facebook"></i></a><a class="level-item button is-transparent is-marginless" target="_blank" rel="noopener" title="Twitter" href="https://twitter.com"><i class="fab fa-twitter"></i></a><a class="level-item button is-transparent is-marginless" target="_blank" rel="noopener" title="Dribbble" href="https://dribbble.com"><i class="fab fa-dribbble"></i></a><a class="level-item button is-transparent is-marginless" target="_blank" rel="noopener" title="RSS" href="/"><i class="fas fa-rss"></i></a></div></div></div><!--!--><div class="card widget" data-type="links"><div class="card-content"><div class="menu"><h3 class="menu-label">链接</h3><ul class="menu-list"><li><a class="level is-mobile" href="https://hexo.io" target="_blank" rel="noopener"><span class="level-left"><span class="level-item">Hexo</span></span><span class="level-right"><span class="level-item tag">hexo.io</span></span></a></li><li><a class="level is-mobile" href="https://bulma.io" target="_blank" rel="noopener"><span class="level-left"><span class="level-item">Bulma</span></span><span class="level-right"><span class="level-item tag">bulma.io</span></span></a></li></ul></div></div></div><div class="card widget" data-type="categories"><div class="card-content"><div class="menu"><h3 class="menu-label">分类</h3><ul class="menu-list"><li><a class="level is-mobile" href="/categories/Qt/"><span class="level-start"><span class="level-item">Qt</span></span><span class="level-end"><span class="level-item tag">2</span></span></a></li><li><a class="level is-mobile" href="/categories/%E5%A4%87%E5%BF%98%E5%BD%95/"><span class="level-start"><span class="level-item">备忘录</span></span><span class="level-end"><span class="level-item tag">4</span></span></a></li></ul></div></div></div><div class="card widget" data-type="recent-posts"><div class="card-content"><h3 class="menu-label">最新文章</h3><article class="media"><div class="media-content"><p class="date"><time dateTime="2023-08-02T12:23:25.000Z">2023-08-02</time></p><p class="title"><a href="/2023/08/02/xcode-command-line-tools/">Xcode命令行工具Command Line Tools</a></p><p class="categories"><a href="/categories/%E5%A4%87%E5%BF%98%E5%BD%95/">备忘录</a></p></div></article><article class="media"><div class="media-content"><p class="date"><time dateTime="2022-08-11T10:05:05.000Z">2022-08-11</time></p><p class="title"><a href="/2022/08/11/Qt/qt-sqlite-image/">Qt生成缩略图片存入sqlite</a></p><p class="categories"><a href="/categories/Qt/">Qt</a></p></div></article><article class="media"><div class="media-content"><p class="date"><time dateTime="2022-08-11T09:59:22.000Z">2022-08-11</time></p><p class="title"><a href="/2022/08/11/Qt/qt-qlineedit-focus/">QLineEdit获取焦点后全选字符/失去焦点清除选择</a></p><p class="categories"><a href="/categories/Qt/">Qt</a></p></div></article><article class="media"><div class="media-content"><p class="date"><time dateTime="2022-08-10T12:46:25.000Z">2022-08-10</time></p><p class="title"><a href="/2022/08/10/macOS-helper/">macOS系统使用技巧</a></p><p class="categories"><a href="/categories/%E5%A4%87%E5%BF%98%E5%BD%95/">备忘录</a></p></div></article><article class="media"><div class="media-content"><p class="date"><time dateTime="2021-07-10T08:46:25.000Z">2021-07-10</time></p><p class="title"><a href="/2021/07/10/ubuntu-server/">Ubuntu Server 18.04常用管理</a></p><p class="categories"><a href="/categories/%E5%A4%87%E5%BF%98%E5%BD%95/">备忘录</a></p></div></article></div></div><div class="card widget" data-type="archives"><div class="card-content"><div class="menu"><h3 class="menu-label">归档</h3><ul class="menu-list"><li><a class="level is-mobile" href="/archives/2023/08/"><span class="level-start"><span class="level-item">八月 2023</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><li><a class="level is-mobile" href="/archives/2022/08/"><span class="level-start"><span class="level-item">八月 2022</span></span><span class="level-end"><span class="level-item tag">3</span></span></a></li><li><a class="level is-mobile" href="/archives/2021/07/"><span class="level-start"><span class="level-item">七月 2021</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><li><a class="level is-mobile" href="/archives/2018/02/"><span class="level-start"><span class="level-item">二月 2018</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li></ul></div></div></div><div class="card widget" data-type="tags"><div class="card-content"><div class="menu"><h3 class="menu-label">标签</h3><div class="field is-grouped is-grouped-multiline"><div class="control"><a class="tags has-addons" href="/tags/Qt/"><span class="tag">Qt</span><span class="tag">2</span></a></div><div class="control"><a class="tags has-addons" href="/tags/Skills/"><span class="tag">Skills</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/macOS/"><span class="tag">macOS</span><span class="tag">2</span></a></div></div></div></div></div></div><!--!--></div></div></section><footer class="footer"><div class="container"><div class="level"><div class="level-start"><a class="footer-logo is-block mb-2" href="/"><img src="/img/logo.svg" alt="胡乱折腾" height="28"></a><p class="is-size-7"><span>&copy; 2023 redtux</span>  Powered by <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a> &amp; <a href="https://github.com/ppoffice/hexo-theme-icarus" target="_blank" rel="noopener">Icarus</a></p></div><div class="level-end"><div class="field has-addons"><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="Creative Commons" href="https://creativecommons.org/"><i class="fab fa-creative-commons"></i></a></p><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="Attribution 4.0 International" href="https://creativecommons.org/licenses/by/4.0/"><i class="fab fa-creative-commons-by"></i></a></p><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="Download on GitHub" href="https://github.com/ppoffice/hexo-theme-icarus"><i class="fab fa-github"></i></a></p></div></div></div></div></footer><script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/moment@2.22.2/min/moment-with-locales.min.js"></script><script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.4/dist/clipboard.min.js" defer></script><script>moment.locale("zh-CN");</script><script>var IcarusThemeSettings = {
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">\---Processing--------------------------</span><br><span class="line"></span><br><span class="line">\---------------------------------------</span><br><span class="line"></span><br><span class="line">Installed product key detected - attempting to activate the following product:</span><br><span class="line"></span><br><span class="line">SKU ID: d450596f-894d-49e0-966a-fd39ed4c4c64</span><br><span class="line"></span><br><span class="line">LICENSE NAME: Office 16, Office16ProPlusVL_KMS_Client edition</span><br><span class="line"></span><br><span class="line">LICENSE DESCRIPTION: Office 16, VOLUME_KMSCLIENT channel</span><br><span class="line"></span><br><span class="line">Last 5 characters of installed product key: WFG99</span><br><span class="line"></span><br><span class="line">&lt;Product activation successful&gt;</span><br><span class="line"></span><br><span class="line">\---------------------------------------</span><br><span class="line"></span><br><span class="line">\---------------------------------------</span><br><span class="line"></span><br><span class="line">\---Exiting-----------------------------</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h2 id="Microsoft-Windows-KMS激活步骤："><a href="#Microsoft-Windows-KMS激活步骤：" class="headerlink" title="Microsoft Windows KMS激活步骤："></a>Microsoft Windows KMS激活步骤：</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"># 卸载已安装密钥</span><br><span class="line">slmgr.vbs /upk</span><br><span class="line"></span><br><span class="line"># 安装需要激活的版本密钥</span><br><span class="line"># 这里以专业版为例，Windows 10 和 11 通用</span><br><span class="line"># 更多版本的系统密钥见下文</span><br><span class="line">slmgr /ipk W269N-WFGWX-YVC9B-4J6C9-T83GX</span><br><span class="line"></span><br><span class="line"># 设置 KMS 激活服务器</span><br><span class="line"># 请将 192.168.7.186 替换为实际 KMS 服务器网址或 IP</span><br><span class="line">slmgr /skms 192.168.7.186</span><br><span class="line"></span><br><span class="line"># 激活</span><br><span class="line">slmgr /ato</span><br></pre></td></tr></table></figure>
+
+<h2 id="所有WINDOWS版本的GVLK密钥对照表"><a href="#所有WINDOWS版本的GVLK密钥对照表" class="headerlink" title="所有WINDOWS版本的GVLK密钥对照表"></a>所有WINDOWS版本的GVLK密钥对照表</h2><p>GVLK密钥是专门用于KMS激活的密钥，如果想使用KMS激活，那么必须先将系统的KEY替换为对应版本的GVLK密钥。</p>
+<p>KMS不仅可以激活Windows 8、Windows 8.1和Windows 7、Windows 10这类我们常用的系统，还可以激活各种版本的Windows Server系统。</p>
+<p>以下是GVLK密钥版本对照表，可配合KMS服务器进行使用。</p>
+<h3 id="WINDOWS-SERVER-半年频道版本"><a href="#WINDOWS-SERVER-半年频道版本" class="headerlink" title="WINDOWS SERVER 半年频道版本"></a>WINDOWS SERVER 半年频道版本</h3><h4 id="Windows-Server-版本-1909、版本1903-和版本-1809"><a href="#Windows-Server-版本-1909、版本1903-和版本-1809" class="headerlink" title="Windows Server 版本 1909、版本1903 和版本 1809"></a>Windows Server 版本 1909、版本1903 和版本 1809</h4><table>
+<thead>
+<tr>
+<th>操作系统版本</th>
+<th>KMS 客户端安装程序密钥</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Windows Server Datacenter</td>
+<td>6NMRW-2C8FM-D24W7-TQWMY-CWH2D</td>
+</tr>
+<tr>
+<td>Windows Server Standard</td>
+<td>N2KJX-J94YW-TQVFB-DG9YT-724CC</td>
+</tr>
+</tbody></table>
+<h3 id="WINDOWS-SERVER-LTSC-x2F-LTSB-版本"><a href="#WINDOWS-SERVER-LTSC-x2F-LTSB-版本" class="headerlink" title="WINDOWS SERVER LTSC&#x2F;LTSB 版本"></a>WINDOWS SERVER LTSC&#x2F;LTSB 版本</h3><h4 id="Windows-Server-2019"><a href="#Windows-Server-2019" class="headerlink" title="Windows Server 2019"></a>Windows Server 2019</h4><table>
+<thead>
+<tr>
+<th>操作系统版本</th>
+<th>KMS 客户端安装程序密钥</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Windows Server 2019 Datacenter</td>
+<td>WMDGN-G9PQG-XVVXX-R3X43-63DFG</td>
+</tr>
+<tr>
+<td>Windows Server 2019 Standard</td>
+<td>N69G4-B89J2-4G8F4-WWYCC-J464C</td>
+</tr>
+<tr>
+<td>Windows Server 2019 Essentials</td>
+<td>WVDHN-86M7X-466P6-VHXV7-YY726</td>
+</tr>
+</tbody></table>
+<h4 id="Windows-Server-2016"><a href="#Windows-Server-2016" class="headerlink" title="Windows Server 2016"></a>Windows Server 2016</h4><table>
+<thead>
+<tr>
+<th>操作系统版本</th>
+<th>KMS 客户端安装程序密钥</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Windows Server 2016 Datacenter</td>
+<td>CB7KF-BWN84-R7R2Y-793K2-8XDDG</td>
+</tr>
+<tr>
+<td>Windows Server 2016 Standard</td>
+<td>WC2BQ-8NRM3-FDDYY-2BFGV-KHKQY</td>
+</tr>
+<tr>
+<td>Windows Server 2016 Essentials</td>
+<td>JCKRF-N37P4-C2D82-9YXRT-4M63B</td>
+</tr>
+</tbody></table>
+<h3 id="WINDOWS-10，所有支持的半年频道版本"><a href="#WINDOWS-10，所有支持的半年频道版本" class="headerlink" title="WINDOWS 10，所有支持的半年频道版本"></a>WINDOWS 10，所有支持的半年频道版本</h3><p>有关受支持的版本和服务终止日期的信息，请参阅 Windows 生命周期情况说明书。</p>
+<table>
+<thead>
+<tr>
+<th>操作系统版本</th>
+<th>KMS 客户端安装程序密钥</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Windows 10 专业版</td>
+<td>W269N-WFGWX-YVC9B-4J6C9-T83GX</td>
+</tr>
+<tr>
+<td>Windows 10 专业版 N</td>
+<td>MH37W-N47XK-V7XM9-C7227-GCQG9</td>
+</tr>
+<tr>
+<td>Windows 10 专业工作站版</td>
+<td>NRG8B-VKK3Q-CXVCJ-9G2XF-6Q84J</td>
+</tr>
+<tr>
+<td>Windows 10 专业工作站版 N</td>
+<td>9FNHH-K3HBT-3W4TD-6383H-6XYWF</td>
+</tr>
+<tr>
+<td>Windows 10 专业教育版</td>
+<td>6TP4R-GNPTD-KYYHQ-7B7DP-J447Y</td>
+</tr>
+<tr>
+<td>Windows 10 专业教育版 N</td>
+<td>YVWGF-BXNMC-HTQYQ-CPQ99-66QFC</td>
+</tr>
+<tr>
+<td>Windows 10 教育版</td>
+<td>NW6C2-QMPVW-D7KKK-3GKT6-VCFB2</td>
+</tr>
+<tr>
+<td>Windows 10 教育版 N</td>
+<td>2WH4N-8QGBV-H22JP-CT43Q-MDWWJ</td>
+</tr>
+<tr>
+<td>Windows 10 企业版</td>
+<td>NPPR9-FWDCX-D2C8J-H872K-2YT43</td>
+</tr>
+<tr>
+<td>Windows 10 企业版 N</td>
+<td>DPH2V-TTNVB-4X9Q3-TJR4H-KHJW4</td>
+</tr>
+<tr>
+<td>Windows 10 企业版 G</td>
+<td>YYVX9-NTFWV-6MDM3-9PT4T-4M68B</td>
+</tr>
+<tr>
+<td>Windows 10 企业版 G N</td>
+<td>44RPN-FTY23-9VTTB-MP9BX-T84FV</td>
+</tr>
+</tbody></table>
+<h3 id="WINDOWS-10-LTSC-x2F-LTSB-版本"><a href="#WINDOWS-10-LTSC-x2F-LTSB-版本" class="headerlink" title="WINDOWS 10 LTSC&#x2F;LTSB 版本"></a>WINDOWS 10 LTSC&#x2F;LTSB 版本</h3><h4 id="Windows-10-LTSC-2019"><a href="#Windows-10-LTSC-2019" class="headerlink" title="Windows 10 LTSC 2019"></a>Windows 10 LTSC 2019</h4><table>
+<thead>
+<tr>
+<th>操作系统版本</th>
+<th>KMS 客户端安装程序密钥</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Windows 10 企业版 LTSC 2019</td>
+<td>M7XTQ-FN8P6-TTKYV-9D4CC-J462D</td>
+</tr>
+<tr>
+<td>Windows 10 企业版 N LTSC 2019</td>
+<td>92NFX-8DJQP-P6BBQ-THF9C-7CG2H</td>
+</tr>
+</tbody></table>
+<h4 id="Windows-10-LTSB-2016"><a href="#Windows-10-LTSB-2016" class="headerlink" title="Windows 10 LTSB 2016"></a>Windows 10 LTSB 2016</h4><table>
+<thead>
+<tr>
+<th>操作系统版本</th>
+<th>KMS 客户端安装程序密钥</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Windows 10 企业版 LTSB 2016</td>
+<td>DCPHK-NFMTC-H88MJ-PFHPY-QJ4BJ</td>
+</tr>
+<tr>
+<td>Windows 10 企业版 N LTSB 2016</td>
+<td>QFFDN-GRT3P-VKWWX-X7T3R-8B639</td>
+</tr>
+</tbody></table>
+<h4 id="Windows-10-LTSB-2015"><a href="#Windows-10-LTSB-2015" class="headerlink" title="Windows 10 LTSB 2015"></a>Windows 10 LTSB 2015</h4><table>
+<thead>
+<tr>
+<th>操作系统版本</th>
+<th>KMS 客户端安装程序密钥</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Windows 10 企业版 2015 LTSB</td>
+<td>WNMTR-4C88C-JK8YV-HQ7T2-76DF9</td>
+</tr>
+<tr>
+<td>Windows 10 企业版 2015 LTSB N</td>
+<td>2F77B-TNFGY-69QQF-B8YKP-D69TJ</td>
+</tr>
+</tbody></table>
+<h3 id="早期版本的-WINDOWS-SERVER"><a href="#早期版本的-WINDOWS-SERVER" class="headerlink" title="早期版本的 WINDOWS SERVER"></a>早期版本的 WINDOWS SERVER</h3><h4 id="Windows-Server-版本-1803"><a href="#Windows-Server-版本-1803" class="headerlink" title="Windows Server 版本 1803"></a>Windows Server 版本 1803</h4><table>
+<thead>
+<tr>
+<th>操作系统版本</th>
+<th>KMS 客户端安装程序密钥</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Windows Server Datacenter</td>
+<td>2HXDN-KRXHB-GPYC7-YCKFJ-7FVDG</td>
+</tr>
+<tr>
+<td>Windows Server Standard</td>
+<td>PTXN8-JFHJM-4WC78-MPCBR-9W4KR</td>
+</tr>
+</tbody></table>
+<h4 id="Windows-Server-版本-1709"><a href="#Windows-Server-版本-1709" class="headerlink" title="Windows Server 版本 1709"></a>Windows Server 版本 1709</h4><table>
+<thead>
+<tr>
+<th>操作系统版本</th>
+<th>KMS 客户端安装程序密钥</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Windows Server Datacenter</td>
+<td>6Y6KB-N82V8-D8CQV-23MJW-BWTG6</td>
+</tr>
+<tr>
+<td>Windows Server Standard</td>
+<td>DPCNP-XQFKJ-BJF7R-FRC8D-GF6G4</td>
+</tr>
+</tbody></table>
+<h4 id="Windows-Server-2012-R2"><a href="#Windows-Server-2012-R2" class="headerlink" title="Windows Server 2012 R2"></a>Windows Server 2012 R2</h4><table>
+<thead>
+<tr>
+<th>操作系统版本</th>
+<th>KMS 客户端安装程序密钥</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Windows Server 2012 R2 Server Standard</td>
+<td>D2N9P-3P6X9-2R39C-7RTCD-MDVJX</td>
+</tr>
+<tr>
+<td>Windows Server 2012 R2 Datacenter</td>
+<td>W3GGN-FT8W3-Y4M27-J84CP-Q3VJ9</td>
+</tr>
+<tr>
+<td>Windows Server 2012 R2 Essentials</td>
+<td>KNC87-3J2TX-XB4WP-VCPJV-M4FWM</td>
+</tr>
+</tbody></table>
+<h4 id="Windows-Server-2012"><a href="#Windows-Server-2012" class="headerlink" title="Windows Server 2012"></a>Windows Server 2012</h4><table>
+<thead>
+<tr>
+<th>操作系统版本</th>
+<th>KMS 客户端安装程序密钥</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Windows Server 2012</td>
+<td>BN3D2-R7TKB-3YPBD-8DRP2-27GG4</td>
+</tr>
+<tr>
+<td>Windows Server 2012 N</td>
+<td>8N2M2-HWPGY-7PGT9-HGDD8-GVGGY</td>
+</tr>
+<tr>
+<td>Windows Server 2012 单语言版</td>
+<td>2WN2H-YGCQR-KFX6K-CD6TF-84YXQ</td>
+</tr>
+<tr>
+<td>Windows Server 2012 特定国家&#x2F;地区版</td>
+<td>4K36P-JN4VD-GDC6V-KDT89-DYFKP</td>
+</tr>
+<tr>
+<td>Windows Server 2012 Server 标准版</td>
+<td>XC9B7-NBPP2-83J2H-RHMBY-92BT4</td>
+</tr>
+<tr>
+<td>Windows Server 2012 MultiPoint 标准版</td>
+<td>HM7DN-YVMH3-46JC3-XYTG7-CYQJJ</td>
+</tr>
+<tr>
+<td>Windows Server 2012 MultiPoint 高级版</td>
+<td>XNH6W-2V9GX-RGJ4K-Y8X6F-QGJ2G</td>
+</tr>
+<tr>
+<td>Windows Server 2012 Datacenter</td>
+<td>48HP8-DN98B-MYWDG-T2DCC-8W83P</td>
+</tr>
+</tbody></table>
+<h4 id="Windows-Server-2008-R2"><a href="#Windows-Server-2008-R2" class="headerlink" title="Windows Server 2008 R2"></a>Windows Server 2008 R2</h4><table>
+<thead>
+<tr>
+<th>操作系统版本</th>
+<th>KMS 客户端安装程序密钥</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Windows Server 2008 R2 Web 版</td>
+<td>6TPJF-RBVHG-WBW2R-86QPH-6RTM4</td>
+</tr>
+<tr>
+<td>Windows Server 2008 R2 HPC 版</td>
+<td>TT8MH-CG224-D3D7Q-498W2-9QCTX</td>
+</tr>
+<tr>
+<td>Windows Server 2008 R2 标准版</td>
+<td>YC6KT-GKW9T-YTKYR-T4X34-R7VHC</td>
+</tr>
+<tr>
+<td>Windows Server 2008 R2 企业版</td>
+<td>489J6-VHDMP-X63PK-3K798-CPX3Y</td>
+</tr>
+<tr>
+<td>Windows Server 2008 R2 Datacenter</td>
+<td>74YFP-3QFB3-KQT8W-PMXWJ-7M648</td>
+</tr>
+<tr>
+<td>面向基于 Itanium 系统的 Windows Server 2008 R2</td>
+<td>GT63C-RJFQ3-4GMB6-BRFB9-CB83V</td>
+</tr>
+</tbody></table>
+<h4 id="Windows-2008-Server"><a href="#Windows-2008-Server" class="headerlink" title="Windows 2008 Server"></a>Windows 2008 Server</h4><table>
+<thead>
+<tr>
+<th>操作系统版本</th>
+<th>KMS 客户端安装程序密钥</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Windows Web Server 2008</td>
+<td>WYR28-R7TFJ-3X2YQ-YCY4H-M249D</td>
+</tr>
+<tr>
+<td>Windows Server 2008 标准版</td>
+<td>TM24T-X9RMF-VWXK6-X8JC9-BFGM2</td>
+</tr>
+<tr>
+<td>不带 Hyper-V 的 Windows Server 2008 标准版</td>
+<td>W7VD6-7JFBR-RX26B-YKQ3Y-6FFFJ</td>
+</tr>
+<tr>
+<td>Windows Server 2008 企业版</td>
+<td>YQGMW-MPWTJ-34KDK-48M3W-X4Q6V</td>
+</tr>
+<tr>
+<td>不带 Hyper-V 的 Windows Server 2008 企业版</td>
+<td>39BXF-X8Q23-P2WWT-38T2F-G3FPG</td>
+</tr>
+<tr>
+<td>Windows Server 2008 HPC</td>
+<td>RCTX3-KWVHP-BR6TB-RB6DM-6X7HP</td>
+</tr>
+<tr>
+<td>Windows Server 2008 Datacenter</td>
+<td>7M67G-PC374-GR742-YH8V4-TCBY3</td>
+</tr>
+<tr>
+<td>不带 Hyper-V 的 Windows Server 2008 数据中心版</td>
+<td>22XQ2-VRXRG-P8D42-K34TD-G3QQC</td>
+</tr>
+<tr>
+<td>面向基于 Itanium 系统的 Windows Server 2008</td>
+<td>4DWFP-JF3DJ-B7DTH-78FJB-PDRHK</td>
+</tr>
+</tbody></table>
+<h3 id="早期版本的-WINDOWS"><a href="#早期版本的-WINDOWS" class="headerlink" title="早期版本的 WINDOWS"></a>早期版本的 WINDOWS</h3><h4 id="Windows-8-1"><a href="#Windows-8-1" class="headerlink" title="Windows 8.1"></a>Windows 8.1</h4><table>
+<thead>
+<tr>
+<th>操作系统版本</th>
+<th>KMS 客户端安装程序密钥</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Windows 8.1 专业版</td>
+<td>GCRJD-8NW9H-F2CDX-CCM8D-9D6T9</td>
+</tr>
+<tr>
+<td>Windows 8.1 专业版 N</td>
+<td>HMCNV-VVBFX-7HMBH-CTY9B-B4FXY</td>
+</tr>
+<tr>
+<td>Windows 8.1 企业版</td>
+<td>MHF9N-XY6XB-WVXMC-BTDCT-MKKG7</td>
+</tr>
+<tr>
+<td>Windows 8.1 企业版 N</td>
+<td>TT4HM-HN7YT-62K67-RGRQJ-JFFXW</td>
+</tr>
+</tbody></table>
+<h4 id="Windows-8"><a href="#Windows-8" class="headerlink" title="Windows 8"></a>Windows 8</h4><table>
+<thead>
+<tr>
+<th>操作系统版本</th>
+<th>KMS 客户端安装程序密钥</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Windows 8 专业版</td>
+<td>NG4HW-VH26C-733KW-K6F98-J8CK4</td>
+</tr>
+<tr>
+<td>Windows 8 专业版 N</td>
+<td>XCVCF-2NXM9-723PB-MHCB7-2RYQQ</td>
+</tr>
+<tr>
+<td>Windows 8 企业版</td>
+<td>32JNW-9KQ84-P47T8-D8GGY-CWCK7</td>
+</tr>
+<tr>
+<td>Windows 8 企业版 N</td>
+<td>JMNMF-RHW7P-DMY6X-RF3DR-X2BQT</td>
+</tr>
+</tbody></table>
+<h4 id="Windows-7"><a href="#Windows-7" class="headerlink" title="Windows 7"></a>Windows 7</h4><table>
+<thead>
+<tr>
+<th>操作系统版本</th>
+<th>KMS 客户端安装程序密钥</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Windows 7 专业版</td>
+<td>FJ82H-XT6CR-J8D7P-XQJJ2-GPDD4</td>
+</tr>
+<tr>
+<td>Windows 7 专业版 N</td>
+<td>MRPKT-YTG23-K7D7T-X2JMM-QY7MG</td>
+</tr>
+<tr>
+<td>Windows 7 专业版 E</td>
+<td>W82YF-2Q76Y-63HXB-FGJG9-GF7QX</td>
+</tr>
+<tr>
+<td>Windows 7 企业版</td>
+<td>33PXH-7Y6KF-2VJC9-XBBR8-HVTHH</td>
+</tr>
+<tr>
+<td>Windows 7 企业版 N</td>
+<td>YDRBP-3D83W-TY26F-D46B2-XCKRJ</td>
+</tr>
+<tr>
+<td>Windows 7 企业版 E</td>
+<td>C29WB-22CC8-VJ326-GHFJW-H9DH4</td>
+</tr>
+</tbody></table>
+</div></article></div><div class="card"><article class="card-content article" role="article"><div class="article-meta is-size-7 is-uppercase level is-mobile"><div class="level-left"><span class="level-item"><time dateTime="2023-08-06T14:23:36.000Z" title="2023/8/6 22:23:36">2023-08-06</time>发表</span><span class="level-item"><time dateTime="2023-08-06T14:24:08.358Z" title="2023/8/6 22:24:08">2023-08-06</time>更新</span><span class="level-item"><a class="link-muted" href="/categories/Qt/">Qt</a></span><span class="level-item">3 分钟读完 (大约398个字)</span></div></div><h1 class="title is-3 is-size-4-mobile"><a class="link-muted" href="/2023/08/06/Qt/qt-pop-dialog/">Qt实现弹出窗口，点击其他位置消失</a></h1><div class="content"><p>Qt实现弹出窗口，点击其他位置消失</p>
+<p>一开始时想的很美好，写button的点击事件，然后在弹窗界面中写eventFilter(QEvent *e)事件</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (event-&gt;<span class="built_in">type</span>() == QEvent::ActivationChange)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">if</span>(QApplication::<span class="built_in">activeWindow</span>() != <span class="keyword">this</span>)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">this</span>-&gt;<span class="built_in">close</span>();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> QWidget::<span class="built_in">event</span>(event);</span><br></pre></td></tr></table></figure>
+
+
+<p>但是这样写发现一个问题，当我想实现点击按钮也可以关闭dialog时，不行了，因为EventFilter是第一触发事件，当我点按钮是，判断当前的活动窗口不是dialog，他先关闭，然后触发按钮的点击事件，再打开了dialog。很麻烦。</p>
+<p>后来有了解到Qt有一个popup的属性</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">info-&gt;<span class="built_in">setWindowFlags</span>(Qt::FramelessWindowHint | Qt::Popup);</span><br></pre></td></tr></table></figure>
+
+<p>这样设置了之后，窗口是无边框且是点击其他位置关闭，但是还是会有上面的问题，没解决。</p>
+<p>再后来，在一篇blog中看到了Qt::WA_NoMouseReplay属性<br>机翻一下：用于弹出窗口小部件。指示在弹出小部件关闭时不应重播最近的鼠标按下事件。该标志由小部件的作者设置，并在小部件每次接收到新的鼠标事件时由Qt内核清除。<br>大意就是它会拦截鼠标事件不会传递，专用于弹窗事件。<br>呜呜呜，原来Qt早就搞定了这个事件，找了半天，还是Qt不熟悉。<br>具体使用，在弹出的窗口里重写mousePressEvent(QMouseEvent *e)事件：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">void</span> <span class="title">InfoDialog::mousePressEvent</span><span class="params">(QMouseEvent *e)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="built_in">setAttribute</span>(Qt::WA_NoMouseReplay);</span><br><span class="line">    QDialog::<span class="built_in">mousePressEvent</span>(e);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+</div></article></div><div class="card"><article class="card-content article" role="article"><div class="article-meta is-size-7 is-uppercase level is-mobile"><div class="level-left"><span class="level-item"><time dateTime="2023-08-06T14:19:36.000Z" title="2023/8/6 22:19:36">2023-08-06</time>发表</span><span class="level-item"><time dateTime="2023-08-06T14:20:27.321Z" title="2023/8/6 22:20:27">2023-08-06</time>更新</span><span class="level-item"><a class="link-muted" href="/categories/Qt/">Qt</a></span><span class="level-item">3 分钟读完 (大约436个字)</span></div></div><h1 class="title is-3 is-size-4-mobile"><a class="link-muted" href="/2023/08/06/Qt/qt-os-define/">Qt的宏定义区分不同操作系统</a></h1><div class="content"><p>程序中遇到需要区分操作系统时，可使用qt的宏定义：</p>
+<p>在<QtGlobal>中，定义了各个系统的宏定义</p>
+<p>Q_OS_AIX<br>Defined on AIX.<br>Q_OS_ANDROID<br>Defined on Android.<br>Q_OS_BSD4<br>Defined on Any BSD 4.4 system.<br>Q_OS_BSDI<br>Defined on BSD&#x2F;OS.<br>Q_OS_CYGWIN<br>Defined on Cygwin.<br>Q_OS_DARWIN<br>Defined on Darwin-based operating systems such as macOS, iOS, watchOS, and tvOS.<br>Q_OS_DGUX<br>Defined on DG&#x2F;UX.<br>Q_OS_DYNIX<br>Defined on DYNIX&#x2F;ptx.<br>Q_OS_FREEBSD<br>Defined on FreeBSD.<br>Q_OS_HPUX<br>Defined on HP-UX.<br>Q_OS_HURD<br>Defined on GNU Hurd.<br>Q_OS_IOS<br>Defined on iOS.<br>Q_OS_IRIX<br>Defined on SGI Irix.<br>Q_OS_LINUX<br>Defined on Linux.<br>Q_OS_LYNX<br>Defined on LynxOS.<br>Q_OS_MAC<br>Deprecated synonym for Q_OS_DARWIN. Do not use.<br>Q_OS_MACOS<br>Defined on macOS.<br>Q_OS_NETBSD<br>Defined on NetBSD.<br>Q_OS_OPENBSD<br>Defined on OpenBSD.<br>Q_OS_OSF<br>Defined on HP Tru64 UNIX.<br>Q_OS_OSX<br>Deprecated synonym for Q_OS_MACOS. Do not use.<br>Q_OS_QNX<br>Defined on QNX Neutrino.<br>Q_OS_RELIANT<br>Defined on Reliant UNIX.<br>Q_OS_SCO<br>Defined on SCO OpenServer 5.<br>Q_OS_SOLARIS<br>Defined on Sun Solaris.<br>Q_OS_TVOS<br>Defined on tvOS.<br>Q_OS_ULTRIX<br>Defined on DEC Ultrix.<br>Q_OS_UNIX<br>Defined on Any UNIX BSD&#x2F;SYSV system.<br>Q_OS_UNIXWARE<br>Defined on UnixWare 7, Open UNIX 8.<br>Q_OS_WATCHOS<br>Defined on watchOS.<br>Q_OS_WIN32<br>Defined on 32-bit and 64-bit versions of Windows.<br>Q_OS_WIN64<br>Defined on 64-bit versions of Windows.<br>Q_OS_WIN<br>Defined on all supported versions of Windows. That is, if Q_OS_WIN32, Q_OS_WIN64, or Q_OS_WINRT is defined.<br>Q_OS_WINPHONE<br>Defined on Windows Phone 8.<br>Q_OS_WINRT<br>Defined for Windows Runtime (Windows Store apps) on Windows 8, Windows RT, and Windows Phone 8.</p>
+<p>举例1：<br>记得需要有QObject的头文件，才可以</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;QObject&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="keyword">ifdef</span> Q_OS_WIN</span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;winsock2.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">endif</span></span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;mysql.h&gt;</span></span></span><br></pre></td></tr></table></figure>
+<p>举例2：<br>对于标记了Q_OBJECT这个宏的类，其成员函数可以直接上面的区分操作系统的这些宏定义。</p>
+<p>***.h文件：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">DetailStepInfo</span> : <span class="keyword">public</span> QObject</span><br><span class="line">&#123;</span><br><span class="line">    Q_OBJECT</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line"></span><br><span class="line">     ....................</span><br><span class="line"></span><br><span class="line">     ...................</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>***.cpp文件：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">bool</span> DetailStepInfo::**************()</span><br><span class="line">&#123;</span><br><span class="line">   </span><br><span class="line"><span class="meta">#<span class="keyword">ifdef</span> Q_OS_WIN</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="keyword">endif</span></span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="keyword">ifdef</span> Q_OS_LINUX</span></span><br><span class="line">            QString command = <span class="built_in">QString</span>(<span class="string">&quot;chmod +rw /****************************&quot;</span>);</span><br><span class="line">            QProcess proc;</span><br><span class="line">            proc.<span class="built_in">execute</span>(command);</span><br><span class="line"><span class="meta">#<span class="keyword">endif</span></span></span><br><span class="line"></span><br><span class="line"> ...........................     </span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</div></article></div><div class="card"><article class="card-content article" role="article"><div class="article-meta is-size-7 is-uppercase level is-mobile"><div class="level-left"><span class="level-item"><time dateTime="2023-08-06T14:01:36.000Z" title="2023/8/6 22:01:36">2023-08-06</time>发表</span><span class="level-item"><time dateTime="2023-08-06T14:02:36.193Z" title="2023/8/6 22:02:36">2023-08-06</time>更新</span><span class="level-item"><a class="link-muted" href="/categories/%E5%A4%87%E5%BF%98%E5%BD%95/">备忘录</a></span><span class="level-item">几秒读完 (大约97个字)</span></div></div><h1 class="title is-3 is-size-4-mobile"><a class="link-muted" href="/2023/08/06/ACE-Editor/">ACE Editor修改自动换号缩进</a></h1><div class="content"><p><a target="_blank" rel="noopener" href="https://stackoverflow.com/questions/38323427/remove-word-wrap-offset-in-ace-editor">https://stackoverflow.com/questions/38323427/remove-word-wrap-offset-in-ace-editor</a></p>
+<p>This is controlled by indentedSoftWrap setting in ace, you can turn it off by running</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">editor.setOption(&quot;indentedSoftWrap&quot;, false);</span><br></pre></td></tr></table></figure>
+
+<p>behaviours setting is completely unrelated and controls automatic insertion of closing brackets and tags.</p>
+<p>So your code from the above would become</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> editor = ace.<span class="title function_">edit</span>(<span class="string">&quot;edittext&quot;</span>);</span><br><span class="line">editor.<span class="title function_">setOptions</span>(&#123;</span><br><span class="line">    <span class="attr">maxLines</span>: <span class="title class_">Infinity</span>, <span class="comment">// this is going to be very slow on large documents</span></span><br><span class="line">    <span class="attr">useWrapMode</span>: <span class="literal">true</span>, <span class="comment">// wrap text to view</span></span><br><span class="line">    <span class="attr">indentedSoftWrap</span>: <span class="literal">false</span>,</span><br><span class="line">    <span class="attr">behavioursEnabled</span>: <span class="literal">false</span>, <span class="comment">// disable autopairing of brackets and tags</span></span><br><span class="line">    <span class="attr">showLineNumbers</span>: <span class="literal">false</span>, <span class="comment">// hide the gutter</span></span><br><span class="line">    <span class="attr">theme</span>: <span class="string">&quot;ace/theme/xcode&quot;</span></span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure></div></article></div><div class="card"><article class="card-content article" role="article"><div class="article-meta is-size-7 is-uppercase level is-mobile"><div class="level-left"><span class="level-item"><time dateTime="2023-08-06T13:33:52.000Z" title="2023/8/6 21:33:52">2023-08-06</time>发表</span><span class="level-item"><time dateTime="2023-08-06T13:43:42.345Z" title="2023/8/6 21:43:42">2023-08-06</time>更新</span><span class="level-item"><a class="link-muted" href="/categories/Ubuntu2Nas/">Ubuntu2Nas</a></span><span class="level-item">3 分钟读完 (大约440个字)</span></div></div><h1 class="title is-3 is-size-4-mobile"><a class="link-muted" href="/2023/08/06/Nas/jellyfin/">安装Jellyfin多媒体服务器</a></h1><div class="content"><p>由于 Jellyfin 的 GPL 协议和 Intel 的 media-driver (iHD) Linux 驱动（部分开源）在协议上不兼容的缘故，Jellyfin 官方的 Docker 镜像：jellyfin&#x2F;jellyfin 并不包含 Intel Linux 核显驱动。但是 Intel 的 QuickSync QSV 硬件加速依赖于该驱动，并且 Intel 10 代酷睿（Comet Lake）以及更新的处理器需要该驱动才能正常使用硬件加速。另外 VPP&#x2F;OpenCL 色调映射也需要该驱动才能正常运作。</p>
+<p>开发者提供的中国特供版镜像<br>Docker 镜像： docker pull nyanmisaka&#x2F;jellyfin:latest</p>
+<p>Jellyfin中国特供版+Docker镜像，含驱动，免折腾开箱即用</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">sudo docker run -d --name=Jellyfin -p 8096:8096 \  # --name=Jellyfin 将容器名定义为 Jellyfin </span><br><span class="line">	-p 8920:8920 -p 7359:7359/udp -p 1900:1900/udp  #这三个端口为可选项 \</span><br><span class="line">	-v /var/docker/jellyfin/library:/config -v /var/docker/jellyfin/cache:/cache -v /data/media:/media \</span><br><span class="line">	-e TZ=Asia/Shanghai -e PUID=0 -e PGID=0 \	#将容器的时区设为上海,使用窗口在运行时使用root权限</span><br><span class="line">	--device=/dev/dri:/dev/dri \	#直通显卡给 Docker 容器，用于硬解</span><br><span class="line">	--add-host=api.themoviedb.org:13.224.161.90 \	#为容器增加 host 指向，加速海报与影视元数据的搜刮</span><br><span class="line">	--add-host=api.themoviedb.org:13.35.8.65 \</span><br><span class="line">	--add-host=api.themoviedb.org:13.35.8.93 \</span><br><span class="line">	--add-host=api.themoviedb.org:13.35.8.6 \</span><br><span class="line">	--add-host=api.themoviedb.org:13.35.8.54 \</span><br><span class="line">	--add-host=image.tmdb.org:138.199.37.230 \</span><br><span class="line">	--add-host=image.tmdb.org:108.138.246.49 \</span><br><span class="line">	--add-host=api.thetvdb.org:13.225.89.239 \</span><br><span class="line">	--add-host=api.thetvdb.org:192.241.234.54 \</span><br><span class="line">	--restart unless-stopped \</span><br><span class="line">	jellyfin/jellyfin:latest</span><br></pre></td></tr></table></figure>
+
+<p>1.如果使用 linuxserver&#x2F;jellyfin 镜像，就把最后一行替换为下行</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">lscr.io/linuxserver/jellyfin:latest</span><br></pre></td></tr></table></figure>
+
+<p>2.如果使用 nyanmisaka&#x2F;jellyfin  镜像，最把最后一行替换为下行</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">nyanmisaka/jellyfin:latest</span><br></pre></td></tr></table></figure>
+
+<p>端口说明：</p>
+<table>
+<thead>
+<tr>
+<th>端口号</th>
+<th>用途</th>
+<th>可选项</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>8096</td>
+<td>默认http端口号</td>
+<td>必须</td>
+</tr>
+<tr>
+<td>8920</td>
+<td>默认https端口号</td>
+<td>可选</td>
+</tr>
+<tr>
+<td>7359</td>
+<td>让同一局域网中的客户端设备自动发现</td>
+<td>可选</td>
+</tr>
+<tr>
+<td>1900</td>
+<td>DLNA的端口</td>
+<td>可选</td>
+</tr>
+</tbody></table>
+</div></article></div><div class="card"><article class="card-content article" role="article"><div class="article-meta is-size-7 is-uppercase level is-mobile"><div class="level-left"><span class="level-item"><time dateTime="2023-08-06T11:53:36.000Z" title="2023/8/6 19:53:36">2023-08-06</time>发表</span><span class="level-item"><time dateTime="2023-08-11T08:38:49.851Z" title="2023/8/11 16:38:49">2023-08-11</time>更新</span><span class="level-item"><a class="link-muted" href="/categories/%E5%A4%87%E5%BF%98%E5%BD%95/">备忘录</a></span><span class="level-item">5 分钟读完 (大约736个字)</span></div></div><h1 class="title is-3 is-size-4-mobile"><a class="link-muted" href="/2023/08/06/ffmpeg-help/">ffmpeg的常用选项</a></h1><div class="content"><h2 id="map选项"><a href="#map选项" class="headerlink" title="map选项"></a>map选项</h2><p>默认情况下只在输入文件中的每种流里选择第一个流。</p>
+<p>需要指定放入输出文件的流就需要使用-map选项。</p>
+<p>用法举例：</p>
+<p>-map 0<br> From input index #0 (the 1st input) select all streams.</p>
+<p>-map 1:a<br> From input index #1 (the 2nd input) select all audio streams.</p>
+<p>-map 3:s:4<br> From input index #3 (the 4th input) select subtitle stream index #4 (the fifth subtitle stream)。</p>
+<p>-map 0 -map -0:s<br> Will select all streams from input index #0 (the 1st input) except subtitles. </p>
+<h2 id="改变视频帧率"><a href="#改变视频帧率" class="headerlink" title="改变视频帧率"></a>改变视频帧率</h2><p>有两种方法可以改变输出文件的视频流帧率：</p>
+<ol>
+<li>使用 -r 选项</li>
+<li>使用 fps滤镜。</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">ffmpeg -i [inputfile] -r 30 [output]</span><br><span class="line">ffmpeg -i [inputfiel] -filter:v fps=30 [output]</span><br></pre></td></tr></table></figure>
+
+<p>有两种方法可以改变输出文件的视频流帧率：</p>
+<h2 id="改变默认音轨"><a href="#改变默认音轨" class="headerlink" title="改变默认音轨"></a>改变默认音轨</h2><p>使用ffmpeg修改默认的音频轨道，先取消第二音轨的默认值，在设置为第一音轨。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ffmpeg -i input.mkv -map 0:0 -map 0:1 -map 0:2  -c copy -disposition:a:1 0 -disposition:a:0 default -y output.mp4</span><br></pre></td></tr></table></figure>
+<h2 id="改变音频采样率"><a href="#改变音频采样率" class="headerlink" title="改变音频采样率"></a>改变音频采样率</h2><p>-ar 48k 44.1k 96k</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ffmpeg -i input.dsf -map 0:0 -c:0 flac -ar:0 96k output.flac</span><br></pre></td></tr></table></figure>
+
+<h2 id="改变音频通道数量"><a href="#改变音频通道数量" class="headerlink" title="改变音频通道数量"></a>改变音频通道数量</h2><p>-ac </p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ffmpeg -i input.dsf -map 0:0 -c:0 flac -ar:0 96k -ac:0 2 -filter:0 aformat=channel_layouts=stereo output.flac</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ffmpeg -i input.dsf -map 0:0 -c:0 flac -ar:0 96k -ac:0 6 -filter:0 aformat=channel_layouts=5.1 output.flac</span><br></pre></td></tr></table></figure>
+
+<h2 id="改变音频位深-bit-depth"><a href="#改变音频位深-bit-depth" class="headerlink" title="改变音频位深 bit depth"></a>改变音频位深 bit depth</h2><p>-sample_fmt</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ffmpeg -i input.dsf -map 0:0 -c:0 flac -ar:0 96k -sample_fmt s24 -ac:0 6 -filter:0 aformat=channel_layouts=5.1 output.flac</span><br></pre></td></tr></table></figure>
+
+<h2 id="截取视频片段"><a href="#截取视频片段" class="headerlink" title="截取视频片段"></a>截取视频片段</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ffmpeg  -i 源文件名 -vcodec copy -acodec copy -ss 00:00:10 -to 00:00:15 目标文件名 -y</span><br></pre></td></tr></table></figure>
+
+<h2 id="调整播放速度"><a href="#调整播放速度" class="headerlink" title="调整播放速度"></a>调整播放速度</h2><h3 id="调整视频文件中视频速度："><a href="#调整视频文件中视频速度：" class="headerlink" title="调整视频文件中视频速度："></a>调整视频文件中视频速度：</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">//2倍速播放</span><br><span class="line">ffmpeg -i test.mp4 -an -filter:v  &quot;setpts=0.5*PTS&quot;  out_test.mp4</span><br><span class="line"></span><br><span class="line">-i test.mp4是输入文件名</span><br><span class="line"> </span><br><span class="line">-an 将音频禁掉   （可以不加）</span><br><span class="line"> </span><br><span class="line">-filter:v 对视频进行处理</span><br><span class="line"> </span><br><span class="line">&quot;setpts=0.5PTS&quot; 设置时间戳参数PTS为原先的一半，可接受调整范围为[0.25,4]</span><br><span class="line"> </span><br><span class="line">out_test.mp4 输出视频文件</span><br><span class="line"> </span><br><span class="line">还可以在命令中加上指定fps（-r 60），使得不会丢帧</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h3 id="调整视频文件中音频速度："><a href="#调整视频文件中音频速度：" class="headerlink" title="调整视频文件中音频速度："></a>调整视频文件中音频速度：</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">ffmpeg -i test.mp4 -filter:a &quot;atempo=2.0&quot; -vn out_test.mp4</span><br><span class="line">-i 后满test.mp4是输入文件名</span><br><span class="line"> </span><br><span class="line">-filter:a 对音频进行处理</span><br><span class="line"> </span><br><span class="line">&quot;atempo=2.0&quot;  设置播放速度是原来的2倍 ，  倍率调整范围[0.5, 2.0]</span><br><span class="line"> </span><br><span class="line">-vn 将视频禁掉   （可以不加）</span><br><span class="line"> </span><br><span class="line">out_test.mp4 输出视频文件</span><br><span class="line"> </span><br><span class="line">需要调整到4倍可以采取以下方法：</span><br><span class="line"> </span><br><span class="line">ffmpeg -i test.mp4 -filter:a &quot;atempo=2.0,atempo=2.0&quot; -vn out_test.mp4</span><br></pre></td></tr></table></figure>
+
+<h3 id="同时调整视频文件的视频、音频："><a href="#同时调整视频文件的视频、音频：" class="headerlink" title="同时调整视频文件的视频、音频："></a>同时调整视频文件的视频、音频：</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ffmpeg -i test.mp4 -filter_complex &quot;[0:v]setpts=0.5*PTS[v];[0:a]atempo=2.0[a]&quot; -map &quot;[v]&quot; -map &quot;[a]&quot;  out_test.mp4</span><br></pre></td></tr></table></figure>
+
+<p>如果不想丢帧就同时设置 <code>-r</code> ，把帧率设置为原帧率的2倍。</p>
+<h2 id="metadata的使用"><a href="#metadata的使用" class="headerlink" title="metadata的使用"></a>metadata的使用</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ffmpeg -i /Users/redtux/Movies/Becoming.Jane.2007.1080p.BluRay.x265.2Audio.mp4  -metadata title=&quot;Becoming.Jane.2007.1080p.BluRay.x265.2Audio-RARBG&quot; -map 0:0 -c:0 copy -metadata:s:0 title=&#x27;Becoming.Jane.2007.1080p.BluRay.x265-RARBG&#x27; -metadata:s:0 handler=&#x27;Becoming.Jane.2007.1080p.BluRay.x265-RARBG&#x27; -map 0:1 -c:1 copy -metadata:s:1 title=&quot;国语配音&quot; -metadata:s:1 handler=&quot;国语配音&quot; -metadata:s:1 language=&quot;chi&quot;  -disposition:1 default -map 0:2 -c:2 copy -metadata:s:2 title=&quot;English&quot; -metadata:s:2 handler=&quot;English&quot; -metadata:s:2 language=&quot;eng&quot;  -disposition:2  0 /Users/redtux/Movies/Becoming.Jane.2007.1080p.BluRay.x265.2Audio-RARBG.mp4</span><br></pre></td></tr></table></figure>
+</div></article></div><div class="card"><article class="card-content article" role="article"><div class="article-meta is-size-7 is-uppercase level is-mobile"><div class="level-left"><span class="level-item"><time dateTime="2023-08-06T10:53:36.000Z" title="2023/8/6 18:53:36">2023-08-06</time>发表</span><span class="level-item"><time dateTime="2023-08-06T10:53:59.093Z" title="2023/8/6 18:53:59">2023-08-06</time>更新</span><span class="level-item"><a class="link-muted" href="/categories/Ubuntu2Nas/">Ubuntu2Nas</a></span><span class="level-item">4 分钟读完 (大约591个字)</span></div></div><h1 class="title is-3 is-size-4-mobile"><a class="link-muted" href="/2023/08/06/Nas/ubuntu-ssh/">Ubuntu的SSH安全配置</a></h1><div class="content"><h2 id="查看登录日志文件："><a href="#查看登录日志文件：" class="headerlink" title="查看登录日志文件："></a>查看登录日志文件：</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo vim /var/log/auth.log</span><br></pre></td></tr></table></figure>
+
+<h2 id="修改SSH的默认端口"><a href="#修改SSH的默认端口" class="headerlink" title="修改SSH的默认端口"></a>修改SSH的默认端口</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">iptables -A INPUT -p tcp -m tcp --dport 6022 -j ACCEPT</span><br></pre></td></tr></table></figure>
+
+<p>保存并重启iptables防火墙</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">service iptables save</span><br><span class="line">service iptables restart</span><br></pre></td></tr></table></figure>
+
+<p>修改SSH的默认端口</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo vim /etc/ssh/sshd_config</span><br></pre></td></tr></table></figure>
+
+<p>把 # Port 22 修改为 Port 6022</p>
+<p>最好使用1024到65535之间的一个别人猜不到的端口号</p>
+<p>重启ssh服务</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo service sshd restart </span><br></pre></td></tr></table></figure>
+
+<p>或 </p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo /etc/init.d/ssh restart</span><br></pre></td></tr></table></figure>
+
+<p>可以用iptables检查端口是否开启</p>
+<h2 id="禁止SSH的root登录"><a href="#禁止SSH的root登录" class="headerlink" title="禁止SSH的root登录"></a>禁止SSH的root登录</h2><p>修改 <code>/etc/ssh/sshd_config</code> 文件</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">PermitRootLogin no</span><br></pre></td></tr></table></figure>
+
+<p>重启ssh服务 </p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo service sshd restart</span><br></pre></td></tr></table></figure>
+
+<h2 id="禁用密码登陆，使用RSA私钥登录"><a href="#禁用密码登陆，使用RSA私钥登录" class="headerlink" title="禁用密码登陆，使用RSA私钥登录"></a>禁用密码登陆，使用RSA私钥登录</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">ssh-keygen #在客户端生成密钥</span><br><span class="line">ssh-copy-id myserver1 #将公钥添加至服务端</span><br></pre></td></tr></table></figure>
+
+<p>还需要配置服务端</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">sudo vim /etc/ssh/sshd_config</span><br><span class="line">PasswordAuthentication no #禁止密码认证</span><br><span class="line">PermitEmptyPasswords no #禁止空密码用户登录</span><br></pre></td></tr></table></figure>
+
+<p>重启ssh服务 </p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo service sshd restart</span><br></pre></td></tr></table></figure>
+
+<h2 id="使用-Fail2ban"><a href="#使用-Fail2ban" class="headerlink" title="使用 Fail2ban"></a>使用 Fail2ban</h2><p>Ubuntu 16.04 系统源里带有 denyhosts ，到了Ubuntu 20.04默认不再包含。DenyHosts现在几乎不再更新了，所以来使用Fail2ban</p>
+<p>检查是否安装了特定软件包</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo apt list --installed | grep denyhosts</span><br><span class="line">sudo apt list --installed | grep fail2ban</span><br></pre></td></tr></table></figure>
+
+<h3 id="安装fail2ban"><a href="#安装fail2ban" class="headerlink" title="安装fail2ban"></a>安装fail2ban</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get install fail2ban</span><br></pre></td></tr></table></figure>
+
+<h3 id="配置fail2ban"><a href="#配置fail2ban" class="headerlink" title="配置fail2ban"></a>配置fail2ban</h3><p>配置文件在 <code>/etc/fail2ban/jail.conf</code> 。 在配置文件的<code>[DEFAULT]</code>区，可以在此定义所有受监控的服务的默认参数</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">[DEFAULT]</span><br><span class="line"># 以空格分隔的列表，可以是 IP 地址、CIDR 前缀或者 DNS 主机名</span><br><span class="line"># 用于指定哪些地址可以忽略 fail2ban 防御</span><br><span class="line">ignoreip =  127.0.0.1/8 ::1</span><br><span class="line"> </span><br><span class="line"># 客户端主机被禁止的时长</span><br><span class="line">bantime = 60m</span><br><span class="line"></span><br><span class="line"># 查找失败次数的时长</span><br><span class="line">findtime = 10m</span><br><span class="line"> </span><br><span class="line"># 客户端主机被禁止前允许失败的次数 </span><br><span class="line">maxretry = 5</span><br></pre></td></tr></table></figure>
+
+<p>根据上述配置，fail2ban会自动禁止在最近10分钟内有超过5次访问尝试失败的任意IP地址。一旦被禁，这个IP地址将会在1小时内一直被禁止访问 SSH 服务</p>
+<p>保存配置后重启服务 </p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo service fail2ban restart</span><br></pre></td></tr></table></figure>
+
+<h3 id="查看fail2ban运行状态"><a href="#查看fail2ban运行状态" class="headerlink" title="查看fail2ban运行状态"></a>查看fail2ban运行状态</h3><p>验证fail2ban成功运行：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ sudo fail2ban-client ping</span><br><span class="line">Server replied: pong</span><br></pre></td></tr></table></figure>
+
+<p>检验fail2ban状态</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$ sudo fail2ban-client status</span><br><span class="line">Status</span><br><span class="line">|- Number of jail:      1</span><br><span class="line">`- Jail list:   sshd</span><br></pre></td></tr></table></figure>
+
+<p>检验一个特定监狱的状态</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo fail2ban-client status </span><br></pre></td></tr></table></figure>
+
+<p>上面的命令会显示出被禁止IP地址列表</p>
+<p>解锁特定的IP地址</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo fail2ban-client set sshd unbanip 192.168.1.8</span><br></pre></td></tr></table></figure>
+</div></article></div><div class="card"><article class="card-content article" role="article"><div class="article-meta is-size-7 is-uppercase level is-mobile"><div class="level-left"><span class="level-item"><time dateTime="2023-08-06T02:53:36.000Z" title="2023/8/6 10:53:36">2023-08-06</time>发表</span><span class="level-item"><time dateTime="2023-08-06T10:34:01.882Z" title="2023/8/6 18:34:01">2023-08-06</time>更新</span><span class="level-item"><a class="link-muted" href="/categories/Ubuntu2Nas/">Ubuntu2Nas</a></span><span class="level-item">1 分钟读完 (大约186个字)</span></div></div><h1 class="title is-3 is-size-4-mobile"><a class="link-muted" href="/2023/08/06/Nas/rustdesk-server/">自建开源远程桌面工具Rustdesk中继服务器</a></h1><div class="content"><p>Rustdesk支持Windows、macOS、Linux、iOS、Android、Web等几乎所有平台，客户端可以在<a target="_blank" rel="noopener" href="https://rustdesk.com/zh/">官方网站</a>下载，安装后自动分配id，立即可以使用。但是官方免费的服务器速度有点慢，官方还提供了服务器端程序，我们可以用docker来安装：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">docker volume create rustdesk_server_data</span><br><span class="line"></span><br><span class="line">docker run --name hbbs --net=host -v <span class="string">&quot;rustdesk_server_data:/root&quot;</span> -d rustdesk/rustdesk-server:latest hbbs -r www.redtux.cn</span><br><span class="line">docker run --name hbbr --net=host -v <span class="string">&quot;rustdesk_server_data:/root&quot;</span> -d rustdesk/rustdesk-server:latest hbbr</span><br></pre></td></tr></table></figure>
+
+<p>这样自建的中继服务器就已经成功运行了，然后在自己的每个客户端设置中继服务器为自己的ip就可以了。</p>
+</div></article></div><div class="card"><article class="card-content article" role="article"><div class="article-meta is-size-7 is-uppercase level is-mobile"><div class="level-left"><span class="level-item"><time dateTime="2023-08-05T05:56:36.000Z" title="2023/8/5 13:56:36">2023-08-05</time>发表</span><span class="level-item"><time dateTime="2023-08-05T05:56:57.215Z" title="2023/8/5 13:56:57">2023-08-05</time>更新</span><span class="level-item"><a class="link-muted" href="/categories/Ubuntu2Nas/">Ubuntu2Nas</a></span><span class="level-item">4 分钟读完 (大约620个字)</span></div></div><h1 class="title is-3 is-size-4-mobile"><a class="link-muted" href="/2023/08/05/Nas/ubuntu-ssl-acme/">使用Acme.sh工具为Ubuntu安装免费ssl证书</a></h1><div class="content"><h2 id="安装acme-sh"><a href="#安装acme-sh" class="headerlink" title="安装acme.sh"></a>安装acme.sh</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl https://get.acme.sh | sh -s email=my@example.com</span><br></pre></td></tr></table></figure>
+
+<p>或者</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">wget -O -  https://get.acme.sh | sh -s email=my@example.com</span><br></pre></td></tr></table></figure>
+
+<p>如果上面两个连接不成功，可以用下面国内的源：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">git clone https://gitee.com/neilpang/acme.sh.git</span><br><span class="line">cd acme.sh</span><br><span class="line">./acme.sh --install -m my@example.com</span><br></pre></td></tr></table></figure>
+
+<p>acme会安装到~&#x2F;acme.sh目录中，安装完成后重新加载Bash：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">source ~/.bashrc</span><br></pre></td></tr></table></figure>
+
+<h2 id="配置acme-sh"><a href="#配置acme-sh" class="headerlink" title="配置acme.sh"></a>配置acme.sh</h2><p>开启自动更新：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">acme.sh --upgrade --auto-upgrade</span><br></pre></td></tr></table></figure>
+
+<p>选择默认 CA<br>目前 acme.sh 支持四个正式环境 CA，分别是 Let’s Encrypt、Buypass、ZeroSSL 和 SSL.com，默认使用 ZeroSSL，如果需要更换可以使用如下命令：</p>
+<p>切换 Let’s Encrypt</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">acme.sh --set-default-ca --server letsencrypt</span><br></pre></td></tr></table></figure>
+
+<p>切换 Buypass</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">acme.sh --set-default-ca --server buypass</span><br></pre></td></tr></table></figure>
+
+<p>切换 ZeroSSL</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">acme.sh --set-default-ca --server zerossl</span><br></pre></td></tr></table></figure>
+
+<p>切换 SSL.com</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">acme.sh --set-default-ca --server ssl.com</span><br></pre></td></tr></table></figure>
+
+<p>切换 Google Public CA</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">acme.sh --set-default-ca --server google</span><br></pre></td></tr></table></figure>
+
+<h2 id="使用-DNS-验证签发证书"><a href="#使用-DNS-验证签发证书" class="headerlink" title="使用 DNS 验证签发证书"></a>使用 DNS 验证签发证书</h2><p>家用网络都封了80端口，不能使用正常模式申请证书，只能使用DNS验证的模式申请，acme.sh 的 DNS API 模式申请证书：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">acme.sh --issue --dns dns_cf -d example.com -d *.example.com</span><br></pre></td></tr></table></figure>
+
+<p>acme.sh 支持几十种 DNS 插件，常用的下面几种，：</p>
+<p>阿里云 –dns dns_ali</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">export Ali_Key=&quot;1234&quot;</span><br><span class="line">export Ali_Secret=&quot;sADDsdasdgdsf&quot;</span><br></pre></td></tr></table></figure>
+
+<p>Dnspod –dns dns_dp</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">export DP_Id=&quot;1234&quot;</span><br><span class="line">export DP_Key=&quot;sADDsdasdgdsf&quot;</span><br></pre></td></tr></table></figure>
+
+<p>Godaddy –dns dns_gd</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">export GD_Key=&quot;sdfsdfsdfljlbjkljlkjsdfoiwje&quot;</span><br><span class="line">export GD_Secret=&quot;asdfsdfsfsdfsdfdfsdf&quot;</span><br></pre></td></tr></table></figure>
+
+<p>AWS –dns dns_aws</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">export AWS_ACCESS_KEY_ID=&quot;sdfsdfsdfljlbjkljlkjsdfoiwje&quot;</span><br><span class="line">export AWS_SECRET_ACCESS_KEY=&quot;xxxxxxx&quot;</span><br></pre></td></tr></table></figure>
+
+<p>Linode –dns dns_linode</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">export LINODE_API_KEY=&quot;xxxxxxxx&quot;</span><br></pre></td></tr></table></figure>
+
+<p>证书申请完成后会提示证书位置：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">[Sat Jul 29 11:51:54 AM UTC 2023] Your cert is in: /root/.acme.sh/redtux.cn/redtux.cn.cer</span><br><span class="line">[Sat Jul 29 11:51:54 AM UTC 2023] Your cert key is in: /root/.acme.sh/redtux.cn/redtux.cn.key</span><br><span class="line">[Sat Jul 29 11:51:54 AM UTC 2023] The intermediate CA cert is in: /root/.acme.sh/redtux.cn/ca.cer</span><br><span class="line">[Sat Jul 29 11:51:54 AM UTC 2023] And the full chain certs is there: /root/.acme.sh/redtux.cn/fullchain.cer</span><br></pre></td></tr></table></figure>
+
+<h2 id="安装证书"><a href="#安装证书" class="headerlink" title="安装证书"></a>安装证书</h2><p>然后我们可以安装证书</p>
+<p>Nginx</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">acme.sh --install-cert -d example.com \</span><br><span class="line">--key-file       /etc/nginx/ssl/example.com.key  \</span><br><span class="line">--fullchain-file /etc/nginx/ssl/example.com.crt \</span><br><span class="line">--ca-file        /etc/nginx/ssl/example.com.ca.crt \</span><br><span class="line">--reloadcmd     &quot;systemctl restart nginx&quot;</span><br></pre></td></tr></table></figure>
+
+<p>对应的 Nginx 配置指定证书文件</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">ssl_certificate /etc/nginx/ssl/example.com.crt;</span><br><span class="line">ssl_certificate_key /etc/nginx/ssl/example.com.key;</span><br><span class="line">ssl_trusted_certificate /etc/nginx/ssl/example.com.ca.crt;</span><br></pre></td></tr></table></figure>
+
+<p>Apache</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">acme.sh --install-cert -d example.com \</span><br><span class="line">--key-file       /etc/apache2/ssl/example.com.key  \</span><br><span class="line">--fullchain-file /etc/apache2/ssl/example.com.crt \</span><br><span class="line">--ca-file        /etc/apache2/ssl/example.com.ca.crt \</span><br><span class="line">--reloadcmd     &quot;curl https://ssl-config.mozilla.org/ffdhe2048.txt &gt;&gt; /etc/apache2/ssl/example.com.crt &amp;&amp; systemctl restart apache2&quot;</span><br></pre></td></tr></table></figure>
+
+<p>对应的 Apache 配置指定证书文件</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">SSLCertificateFile      /etc/apache2/ssl/example.com.crt</span><br><span class="line">SSLCertificateKeyFile   /etc/apache2/ssl/example.com.key</span><br></pre></td></tr></table></figure>
+
+</div></article></div><div class="card"><article class="card-content article" role="article"><div class="article-meta is-size-7 is-uppercase level is-mobile"><div class="level-left"><span class="level-item"><time dateTime="2023-08-05T05:02:36.000Z" title="2023/8/5 13:02:36">2023-08-05</time>发表</span><span class="level-item"><time dateTime="2023-08-05T06:00:38.907Z" title="2023/8/5 14:00:38">2023-08-05</time>更新</span><span class="level-item"><a class="link-muted" href="/categories/Ubuntu2Nas/">Ubuntu2Nas</a></span><span class="level-item">6 分钟读完 (大约887个字)</span></div></div><h1 class="title is-3 is-size-4-mobile"><a class="link-muted" href="/2023/08/05/Nas/navidrome/">替代群晖音乐的工具：Navidrome</a></h1><div class="content"><h2 id="Linux下的安装"><a href="#Linux下的安装" class="headerlink" title="Linux下的安装"></a>Linux下的安装</h2><p>首先安装依赖，navidrome依赖ffmpeg：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">sudo apt update</span><br><span class="line">sudo apt upgrade</span><br><span class="line">sudo apt install vim ffmpeg</span><br></pre></td></tr></table></figure>
+
+<p>然后创建navidrome工作的目录结构：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo install -d -o &lt;user&gt; -g &lt;group&gt; /opt/navidrome</span><br><span class="line">sudo install -d -o &lt;user&gt; -g &lt;group&gt; /var/lib/navidrome</span><br></pre></td></tr></table></figure>
+
+<p>下载Navidrome</p>
+<p>从<a target="_blank" rel="noopener" href="https://github.com/navidrome/navidrome/releases">GitHub</a>下载最新发布版本（用最新版的下载地址替换下面命令中的地址），解压到程序目录&#x2F;opt&#x2F;navidrome，赋予目录可执行权限。 </p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">wget https://github.com/navidrome/navidrome/releases/download/v0.XX.0/navidrome_0.XX.0_Linux_x86_64.tar.gz -O Navidrome.tar.gz</span><br><span class="line">sudo tar -xvzf Navidrome.tar.gz -C /opt/navidrome/</span><br><span class="line">sudo <span class="built_in">chown</span> -R &lt;user&gt;:&lt;group&gt; /opt/navidrome</span><br></pre></td></tr></table></figure>
+
+<h2 id="创建配置文件"><a href="#创建配置文件" class="headerlink" title="创建配置文件"></a>创建配置文件</h2><p>In the working directory, &#x2F;var&#x2F;lib&#x2F;navidrome create a new file named navidrome.toml with the following settings.</p>
+<p>MusicFolder &#x3D; “<library_path>“<br>For additional configuration options see the <a target="_blank" rel="noopener" href="https://www.navidrome.org/docs/usage/configuration-options/">configuration options page</a>.</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">LogLevel = &#x27;DEBUG&#x27;</span><br><span class="line">ScanSchedule = &#x27;@every 24h&#x27;</span><br><span class="line">TranscodingCacheSize = &#x27;150MiB&#x27;</span><br><span class="line">MusicFolder = &#x27;/mnt/music&#x27;</span><br><span class="line">Port = &#x27;6019&#x27;</span><br><span class="line">DefaultLanguage = &#x27;zh-Hans&#x27;</span><br><span class="line">EnableSharing = true</span><br><span class="line">EnableTranscodingConfig = true</span><br><span class="line">LastFM.Language = &#x27;zh-Hans&#x27;</span><br><span class="line">UIWelcomeMessage = &#x27;Redtuxs Family Music Server&#x27;</span><br></pre></td></tr></table></figure>
+
+<h2 id="创建系统服务配置文件"><a href="#创建系统服务配置文件" class="headerlink" title="创建系统服务配置文件"></a>创建系统服务配置文件</h2><p>Create a new file under &#x2F;etc&#x2F;systemd&#x2F;system&#x2F; named navidrome.service with the following data. Make sure you replace <user> and <group> with the user and group you want to run Navidrome under.</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br></pre></td><td class="code"><pre><span class="line">[Unit]</span><br><span class="line">Description=Navidrome Music Server and Streamer compatible with Subsonic/Airsonic</span><br><span class="line">After=remote-fs.target network.target</span><br><span class="line">AssertPathExists=/var/lib/navidrome</span><br><span class="line"></span><br><span class="line">[Install]</span><br><span class="line">WantedBy=multi-user.target</span><br><span class="line"></span><br><span class="line">[Service]</span><br><span class="line">User=&lt;user&gt;</span><br><span class="line">Group=&lt;group&gt;</span><br><span class="line">Type=simple</span><br><span class="line">ExecStart=/opt/navidrome/navidrome --configfile &quot;/var/lib/navidrome/navidrome.toml&quot;</span><br><span class="line">WorkingDirectory=/var/lib/navidrome</span><br><span class="line">TimeoutStopSec=20</span><br><span class="line">KillMode=process</span><br><span class="line">Restart=on-failure</span><br><span class="line"></span><br><span class="line"># See https://www.freedesktop.org/software/systemd/man/systemd.exec.html</span><br><span class="line">DevicePolicy=closed</span><br><span class="line">NoNewPrivileges=yes</span><br><span class="line">PrivateTmp=yes</span><br><span class="line">PrivateUsers=yes</span><br><span class="line">ProtectControlGroups=yes</span><br><span class="line">ProtectKernelModules=yes</span><br><span class="line">ProtectKernelTunables=yes</span><br><span class="line">RestrictAddressFamilies=AF_UNIX AF_INET AF_INET6</span><br><span class="line">RestrictNamespaces=yes</span><br><span class="line">RestrictRealtime=yes</span><br><span class="line">SystemCallFilter=~@clock @debug @module @mount @obsolete @reboot @setuid @swap</span><br><span class="line">ReadWritePaths=/var/lib/navidrome</span><br><span class="line"></span><br><span class="line"># You can uncomment the following line if you&#x27;re not using the jukebox This</span><br><span class="line"># will prevent navidrome from accessing any real (physical) devices</span><br><span class="line">#PrivateDevices=yes</span><br><span class="line"></span><br><span class="line"># You can change the following line to `strict` instead of `full` if you don&#x27;t</span><br><span class="line"># want navidrome to be able to write anything on your filesystem outside of</span><br><span class="line"># /var/lib/navidrome.</span><br><span class="line">ProtectSystem=full</span><br><span class="line"></span><br><span class="line"># You can uncomment the following line if you don&#x27;t have any media in /home/*.</span><br><span class="line"># This will prevent navidrome from ever reading/writing anything there.</span><br><span class="line">#ProtectHome=true</span><br><span class="line"></span><br><span class="line"># You can customize some Navidrome config options by setting environment variables here. Ex:</span><br><span class="line">#Environment=ND_BASEURL=&quot;/navidrome&quot;</span><br></pre></td></tr></table></figure>
+
+<h2 id="启动Navidrome服务"><a href="#启动Navidrome服务" class="headerlink" title="启动Navidrome服务"></a>启动Navidrome服务</h2><p>Reload the service daemon, start the newly create service, and verify it has started correctly.</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">sudo systemctl daemon-reload</span><br><span class="line">sudo systemctl start navidrome.service</span><br><span class="line">sudo systemctl status navidrome.service</span><br><span class="line">sudo systemctl restart navidrome.service</span><br></pre></td></tr></table></figure>
+
+<p>如果服务成功启动，你就可以访问<code>http://localhost:4533</code>来访问web端.</p>
+<h2 id="让Navidrome随系统启动"><a href="#让Navidrome随系统启动" class="headerlink" title="让Navidrome随系统启动"></a>让Navidrome随系统启动</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo systemctl <span class="built_in">enable</span> navidrome.service</span><br></pre></td></tr></table></figure>
+
+<h2 id="用Nginx配置反向代理"><a href="#用Nginx配置反向代理" class="headerlink" title="用Nginx配置反向代理"></a>用Nginx配置反向代理</h2><p>反向代理配置文件</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line">server &#123;</span><br><span class="line">	listen 619 default_server;</span><br><span class="line">	listen [::]:619 default_server;</span><br><span class="line"></span><br><span class="line">	# SSL configuration</span><br><span class="line">	#</span><br><span class="line">	# listen 443 ssl default_server;</span><br><span class="line">	# listen [::]:443 ssl default_server;</span><br><span class="line">	#</span><br><span class="line">	# Note: You should disable gzip for SSL traffic.</span><br><span class="line">	# See: https://bugs.debian.org/773332</span><br><span class="line">	#</span><br><span class="line">	# Read up on ssl_ciphers to ensure a secure configuration.</span><br><span class="line">	# See: https://bugs.debian.org/765782</span><br><span class="line">	#</span><br><span class="line">	# Self signed certs generated by the ssl-cert package</span><br><span class="line">	# Don&#x27;t use them in a production server!</span><br><span class="line">	#</span><br><span class="line">	# include snippets/snakeoil.conf;</span><br><span class="line"></span><br><span class="line">	#root /var/www/start;</span><br><span class="line"></span><br><span class="line">	# Add index.php to the list if you are using PHP</span><br><span class="line">	#index index.html index.htm index.nginx-debian.html;</span><br><span class="line"></span><br><span class="line">	server_name www.redtux.cn;</span><br><span class="line"></span><br><span class="line">   client_max_body_size 50000M;</span><br><span class="line"></span><br><span class="line">    location / &#123;</span><br><span class="line">        proxy_pass http://192.168.0.6:6019;</span><br><span class="line"></span><br><span class="line">      proxy_set_header Host $http_host;</span><br><span class="line">      proxy_set_header X-Real-IP $remote_addr;</span><br><span class="line">      proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;</span><br><span class="line">      proxy_set_header X-Forwarded-Proto $scheme;</span><br><span class="line">      proxy_set_header X-Forwarded-Protocol $scheme;</span><br><span class="line">      proxy_set_header X-Forwarded-Host $http_host;</span><br><span class="line">      proxy_buffering off;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>也可以Docker的方式安装，详见官方文档<a target="_blank" rel="noopener" href="https://www.navidrome.org/">Navidrome官方网站</a> – <a target="_blank" rel="noopener" href="https://www.appinn.com/navidrome/">开源音乐服务器，自建云端音乐播放器</a> </p>
+<h2 id="客户端"><a href="#客户端" class="headerlink" title="客户端"></a>客户端</h2><p>Android手机可以从F-Droid直接安装Subtracks或者Ultrasonic，然后设置服务器地址就可以了。</p>
+<p>PC可以使用Sonixd客户端，<a target="_blank" rel="noopener" href="https://github.com/jeffvli/sonixd">下载地址</a>，下载对应系统的版本。</p>
+<h2 id="号外"><a href="#号外" class="headerlink" title="号外"></a>号外</h2><p>其实还有一个自建音乐流媒体服务器<a target="_blank" rel="noopener" href="https://koel.dev/">koel</a>——基于php fpm docker界面漂亮，唯一缺点就是手机客户端只能从Google play下载，国内只能用浏览器访问。</p>
+</div></article></div><nav class="pagination" role="navigation" aria-label="pagination"><div class="pagination-previous is-invisible is-hidden-mobile"><a href="/page/0/">上一页</a></div><div class="pagination-next"><a href="/page/2/">下一页</a></div><ul class="pagination-list is-hidden-mobile"><li><a class="pagination-link is-current" href="/">1</a></li><li><a class="pagination-link" href="/page/2/">2</a></li><li><a class="pagination-link" href="/page/3/">3</a></li></ul></nav></div><div class="column column-left is-4-tablet is-4-desktop is-4-widescreen  order-1"><div class="card widget" data-type="profile"><div class="card-content"><nav class="level"><div class="level-item has-text-centered flex-shrink-1"><div><figure class="image is-128x128 mx-auto mb-2"><img class="avatar" src="/img/avatar.png" alt="胡乱折腾"></figure><p class="title is-size-4 is-block" style="line-height:inherit;">胡乱折腾</p><p class="is-size-6 is-block">生命不息，折腾不止！</p><p class="is-size-6 is-flex justify-content-center"><i class="fas fa-map-marker-alt mr-1"></i><span>China</span></p></div></div></nav><nav class="level is-mobile"><div class="level-item has-text-centered is-marginless"><div><p class="heading">文章</p><a href="/archives"><p class="title">22</p></a></div></div><div class="level-item has-text-centered is-marginless"><div><p class="heading">分类</p><a href="/categories"><p class="title">3</p></a></div></div><div class="level-item has-text-centered is-marginless"><div><p class="heading">标签</p><a href="/tags"><p class="title">7</p></a></div></div></nav><div class="level"><a class="level-item button is-primary is-rounded" href="https://github.com/tux0529" target="_blank" rel="noopener">关注我</a></div><div class="level is-mobile is-multiline"><a class="level-item button is-transparent is-marginless" target="_blank" rel="noopener" title="Github" href="https://github.com/tux0529"><i class="fab fa-github"></i></a><a class="level-item button is-transparent is-marginless" target="_blank" rel="noopener" title="Facebook" href="https://facebook.com"><i class="fab fa-facebook"></i></a><a class="level-item button is-transparent is-marginless" target="_blank" rel="noopener" title="Twitter" href="https://twitter.com"><i class="fab fa-twitter"></i></a><a class="level-item button is-transparent is-marginless" target="_blank" rel="noopener" title="Dribbble" href="https://dribbble.com"><i class="fab fa-dribbble"></i></a><a class="level-item button is-transparent is-marginless" target="_blank" rel="noopener" title="RSS" href="/"><i class="fas fa-rss"></i></a></div></div></div><!--!--><div class="card widget" data-type="links"><div class="card-content"><div class="menu"><h3 class="menu-label">链接</h3><ul class="menu-list"><li><a class="level is-mobile" href="https://hexo.io" target="_blank" rel="noopener"><span class="level-left"><span class="level-item">Hexo</span></span><span class="level-right"><span class="level-item tag">hexo.io</span></span></a></li><li><a class="level is-mobile" href="https://bulma.io" target="_blank" rel="noopener"><span class="level-left"><span class="level-item">Bulma</span></span><span class="level-right"><span class="level-item tag">bulma.io</span></span></a></li></ul></div></div></div><div class="card widget" data-type="categories"><div class="card-content"><div class="menu"><h3 class="menu-label">分类</h3><ul class="menu-list"><li><a class="level is-mobile" href="/categories/Qt/"><span class="level-start"><span class="level-item">Qt</span></span><span class="level-end"><span class="level-item tag">4</span></span></a></li><li><a class="level is-mobile" href="/categories/Ubuntu2Nas/"><span class="level-start"><span class="level-item">Ubuntu2Nas</span></span><span class="level-end"><span class="level-item tag">11</span></span></a></li><li><a class="level is-mobile" href="/categories/%E5%A4%87%E5%BF%98%E5%BD%95/"><span class="level-start"><span class="level-item">备忘录</span></span><span class="level-end"><span class="level-item tag">7</span></span></a></li></ul></div></div></div><div class="card widget" data-type="recent-posts"><div class="card-content"><h3 class="menu-label">最新文章</h3><article class="media"><div class="media-content"><p class="date"><time dateTime="2023-08-14T04:10:00.000Z">2023-08-14</time></p><p class="title"><a href="/2023/08/14/windows-office-kms/">Microsoft Office及Windows的KMS激活步骤</a></p><p class="categories"><a href="/categories/%E5%A4%87%E5%BF%98%E5%BD%95/">备忘录</a></p></div></article><article class="media"><div class="media-content"><p class="date"><time dateTime="2023-08-06T14:23:36.000Z">2023-08-06</time></p><p class="title"><a href="/2023/08/06/Qt/qt-pop-dialog/">Qt实现弹出窗口，点击其他位置消失</a></p><p class="categories"><a href="/categories/Qt/">Qt</a></p></div></article><article class="media"><div class="media-content"><p class="date"><time dateTime="2023-08-06T14:19:36.000Z">2023-08-06</time></p><p class="title"><a href="/2023/08/06/Qt/qt-os-define/">Qt的宏定义区分不同操作系统</a></p><p class="categories"><a href="/categories/Qt/">Qt</a></p></div></article><article class="media"><div class="media-content"><p class="date"><time dateTime="2023-08-06T14:01:36.000Z">2023-08-06</time></p><p class="title"><a href="/2023/08/06/ACE-Editor/">ACE Editor修改自动换号缩进</a></p><p class="categories"><a href="/categories/%E5%A4%87%E5%BF%98%E5%BD%95/">备忘录</a></p></div></article><article class="media"><div class="media-content"><p class="date"><time dateTime="2023-08-06T13:33:52.000Z">2023-08-06</time></p><p class="title"><a href="/2023/08/06/Nas/jellyfin/">安装Jellyfin多媒体服务器</a></p><p class="categories"><a href="/categories/Ubuntu2Nas/">Ubuntu2Nas</a></p></div></article></div></div><div class="card widget" data-type="archives"><div class="card-content"><div class="menu"><h3 class="menu-label">归档</h3><ul class="menu-list"><li><a class="level is-mobile" href="/archives/2023/08/"><span class="level-start"><span class="level-item">八月 2023</span></span><span class="level-end"><span class="level-item tag">17</span></span></a></li><li><a class="level is-mobile" href="/archives/2022/08/"><span class="level-start"><span class="level-item">八月 2022</span></span><span class="level-end"><span class="level-item tag">3</span></span></a></li><li><a class="level is-mobile" href="/archives/2021/07/"><span class="level-start"><span class="level-item">七月 2021</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><li><a class="level is-mobile" href="/archives/2018/02/"><span class="level-start"><span class="level-item">二月 2018</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li></ul></div></div></div><div class="card widget" data-type="tags"><div class="card-content"><div class="menu"><h3 class="menu-label">标签</h3><div class="field is-grouped is-grouped-multiline"><div class="control"><a class="tags has-addons" href="/tags/Nas%E5%B7%A5%E5%85%B7/"><span class="tag">Nas工具</span><span class="tag">11</span></a></div><div class="control"><a class="tags has-addons" href="/tags/Qt/"><span class="tag">Qt</span><span class="tag">4</span></a></div><div class="control"><a class="tags has-addons" href="/tags/Skills/"><span class="tag">Skills</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/ffmpeg/"><span class="tag">ffmpeg</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/kms%E6%BF%80%E6%B4%BB/"><span class="tag">kms激活</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/macOS/"><span class="tag">macOS</span><span class="tag">2</span></a></div><div class="control"><a class="tags has-addons" href="/tags/web/"><span class="tag">web</span><span class="tag">1</span></a></div></div></div></div></div></div><!--!--></div></div></section><footer class="footer"><div class="container"><div class="level"><div class="level-start"><a class="footer-logo is-block mb-2" href="/"><img src="/img/logo.svg" alt="胡乱折腾" height="28"></a><p class="is-size-7"><span>&copy; 2023 redtux</span>  Powered by <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a> &amp; <a href="https://github.com/ppoffice/hexo-theme-icarus" target="_blank" rel="noopener">Icarus</a></p></div><div class="level-end"><div class="field has-addons"><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="Creative Commons" href="https://creativecommons.org/"><i class="fab fa-creative-commons"></i></a></p><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="Attribution 4.0 International" href="https://creativecommons.org/licenses/by/4.0/"><i class="fab fa-creative-commons-by"></i></a></p><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="Download on GitHub" href="https://github.com/ppoffice/hexo-theme-icarus"><i class="fab fa-github"></i></a></p></div></div></div></div></footer><script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/moment@2.22.2/min/moment-with-locales.min.js"></script><script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.4/dist/clipboard.min.js" defer></script><script>moment.locale("zh-CN");</script><script>var IcarusThemeSettings = {
             article: {
                 highlight: {
                     clipboard: true,
