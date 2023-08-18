@@ -1,0 +1,194 @@
+<!doctype html>
+<html lang="zh"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"><meta><title>Ubuntu Server 常用管理 - 胡乱折腾</title><link rel="manifest" href="/manifest.json"><meta name="application-name" content="胡乱折腾"><meta name="msapplication-TileImage" content="/img/favicon.svg"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="胡乱折腾"><meta name="apple-mobile-web-app-status-bar-style" content="default"><meta name="description" content="1.重启网络服务：   sudo &amp;#x2F;etc&amp;#x2F;init.d&amp;#x2F;networking restart    或者：    service networking restart 2.设置Nameserver（2种方法）： 修改&amp;#x2F;etc&amp;#x2F;resolv.conf，但此文件会被resolvconf重写，故应该修改resolvconf配置文件&amp;#x2F;etc&amp;#x2F;resolvconf&amp;#x2F;resolv.conf.d&amp;#x2F;head，"><meta property="og:type" content="blog"><meta property="og:title" content="Ubuntu Server 常用管理"><meta property="og:url" content="http://tux.red/2023/08/18/ubuntu-server/"><meta property="og:site_name" content="胡乱折腾"><meta property="og:description" content="1.重启网络服务：   sudo &amp;#x2F;etc&amp;#x2F;init.d&amp;#x2F;networking restart    或者：    service networking restart 2.设置Nameserver（2种方法）： 修改&amp;#x2F;etc&amp;#x2F;resolv.conf，但此文件会被resolvconf重写，故应该修改resolvconf配置文件&amp;#x2F;etc&amp;#x2F;resolvconf&amp;#x2F;resolv.conf.d&amp;#x2F;head，"><meta property="og:locale" content="zh_CN"><meta property="og:image" content="http://tux.red/img/og_image.png"><meta property="article:published_time" content="2023-08-18T08:46:25.000Z"><meta property="article:modified_time" content="2023-08-18T13:13:06.911Z"><meta property="article:author" content="redtux"><meta property="twitter:card" content="summary"><meta property="twitter:image:src" content="http://tux.red/img/og_image.png"><script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"http://tux.red/2023/08/18/ubuntu-server/"},"headline":"Ubuntu Server 常用管理","image":["http://tux.red/img/og_image.png"],"datePublished":"2023-08-18T08:46:25.000Z","dateModified":"2023-08-18T13:13:06.911Z","author":{"@type":"Person","name":"redtux"},"publisher":{"@type":"Organization","name":"胡乱折腾","logo":{"@type":"ImageObject","url":"http://tux.red/img/logo.svg"}},"description":"1.重启网络服务：   sudo &#x2F;etc&#x2F;init.d&#x2F;networking restart    或者：    service networking restart 2.设置Nameserver（2种方法）： 修改&#x2F;etc&#x2F;resolv.conf，但此文件会被resolvconf重写，故应该修改resolvconf配置文件&#x2F;etc&#x2F;resolvconf&#x2F;resolv.conf.d&#x2F;head，"}</script><link rel="canonical" href="http://tux.red/2023/08/18/ubuntu-server/"><link rel="icon" href="/img/favicon.svg"><link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.2/css/all.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@9.12.0/styles/monokai-sublime.css"><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@400;600&amp;family=Source+Code+Pro"><link rel="stylesheet" href="/css/default.css"><style>body>.footer,body>.navbar,body>.section{opacity:0}</style><!--!--><!--!--><!--!--><!--!--><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cookieconsent@3.1.1/build/cookieconsent.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@1.10.0/dist/css/lightgallery.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/justifiedGallery@3.8.1/dist/css/justifiedGallery.min.css"><!--!--><!--!--><style>.pace{-webkit-pointer-events:none;pointer-events:none;-webkit-user-select:none;-moz-user-select:none;user-select:none}.pace-inactive{display:none}.pace .pace-progress{background:#3273dc;position:fixed;z-index:2000;top:0;right:100%;width:100%;height:2px}</style><script src="https://cdn.jsdelivr.net/npm/pace-js@1.2.4/pace.min.js"></script><!--!--><!--!--><!-- hexo injector head_end start --><script>
+  (function () {
+      function switchTab() {
+          if (!location.hash) {
+            return;
+          }
+          Array
+              .from(document.querySelectorAll('.tab-content'))
+              .forEach($tab => {
+                  $tab.classList.add('is-hidden');
+              });
+          Array
+              .from(document.querySelectorAll('.tabs li'))
+              .forEach($tab => {
+                  $tab.classList.remove('is-active');
+              });
+          const $activeTab = document.querySelector(location.hash);
+          if ($activeTab) {
+              $activeTab.classList.remove('is-hidden');
+          }
+          const $tabMenu = document.querySelector(`a[href="${location.hash}"]`);
+          if ($tabMenu) {
+              $tabMenu.parentElement.classList.add('is-active');
+          }
+      }
+      switchTab();
+      window.addEventListener('hashchange', switchTab, false);
+  })();
+  </script><!-- hexo injector head_end end --><meta name="generator" content="Hexo 6.2.0"></head><body class="is-2-column"><nav class="navbar navbar-main"><div class="container navbar-container"><div class="navbar-brand justify-content-center"><a class="navbar-item navbar-logo" href="/"><img src="/img/logo.svg" alt="胡乱折腾" height="28"></a></div><div class="navbar-menu"><div class="navbar-start"><a class="navbar-item" href="/">主页</a><a class="navbar-item" href="/archives">存档</a><a class="navbar-item" href="/categories">分类</a><a class="navbar-item" href="/tags">标签</a><a class="navbar-item" href="/about">关于</a></div><div class="navbar-end"><a class="navbar-item" target="_blank" rel="noopener" title="GitHub" href="https://github.com/tux0529"><i class="fab fa-github"></i></a><a class="navbar-item search" title="搜索" href="javascript:;"><i class="fas fa-search"></i></a></div></div></div></nav><section class="section"><div class="container"><div class="columns"><div class="column order-2 column-main is-8-tablet is-8-desktop is-8-widescreen"><div class="card"><article class="card-content article" role="article"><div class="article-meta is-size-7 is-uppercase level is-mobile"><div class="level-left"><span class="level-item"><time dateTime="2023-08-18T08:46:25.000Z" title="2023/8/18 16:46:25">2023-08-18</time>发表</span><span class="level-item"><time dateTime="2023-08-18T13:13:06.911Z" title="2023/8/18 21:13:06">2023-08-18</time>更新</span><span class="level-item"><a class="link-muted" href="/categories/%E5%A4%87%E5%BF%98%E5%BD%95/">备忘录</a></span><span class="level-item">17 分钟读完 (大约2594个字)</span></div></div><h1 class="title is-3 is-size-4-mobile">Ubuntu Server 常用管理</h1><div class="content"><h2 id="1-重启网络服务："><a href="#1-重启网络服务：" class="headerlink" title="1.重启网络服务："></a>1.重启网络服务：</h2><p>   <code>sudo /etc/init.d/networking restart</code></p>
+<p>   或者：</p>
+<p>   <code>service networking restart</code></p>
+<h2 id="2-设置Nameserver（2种方法）："><a href="#2-设置Nameserver（2种方法）：" class="headerlink" title="2.设置Nameserver（2种方法）："></a>2.设置Nameserver（2种方法）：</h2><ul>
+<li>修改<code>/etc/resolv.conf</code>，但此文件会被resolvconf重写，故应该修改resolvconf配置文件<code>/etc/resolvconf/resolv.conf.d/head</code>， 增加：<code>nameserver 202.96.209.133</code></li>
+<li>修改<code>/etc/network/interfaces</code>，DNS对应的参数名为<code>dns-nameservers</code>，这里设置的优先级比上一种方法高。如果两种方法都设置了，则都会出现在&#x2F;etc&#x2F;resolv.conf中。</li>
+</ul>
+<h2 id="3-将用户加入-group："><a href="#3-将用户加入-group：" class="headerlink" title="3.将用户加入 group："></a>3.将用户加入 group：</h2><p><code>usermod -G groupname username</code> (这种会把用户从其他组中去掉，只属于该组)<br>如：<code>usermod -G git git</code> (git只属于git组)</p>
+<p><code>usermod -a -G groupname username</code> (把用户添加到这个组，之前所属组不影响)<br>如：<code>usermod -a -G www git</code> (git属于之前git组，也属于www组)</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">xxx@xxxx:~$ cat /etc/group|grep user1</span><br><span class="line">user1:x:999:user1</span><br><span class="line">xxx@xxxx:~$ cat /etc/group|grep sudo</span><br><span class="line">sudo:x:27:</span><br><span class="line">xxx@xxxx:~$ usermod -G 27 user1</span><br><span class="line">xxx@xxxx:~$ cat /etc/group|grep sudo</span><br><span class="line">sudo:x:27:user1</span><br><span class="line">xxx@xxxx:~$ cat /etc/group|grep user1</span><br><span class="line">user1:x:999:</span><br><span class="line">xxx@xxxx:~$ usermod -a -G 999 user1</span><br><span class="line">xxx@xxxx:~$ cat /etc/group|grep user1</span><br><span class="line">user1:x:999:user1</span><br><span class="line">xxx@xxxx:~$ cat /etc/group|grep sudo</span><br><span class="line">sudo:x:27:user1</span><br></pre></td></tr></table></figure>
+
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">xxx@xxxx:~$ useradd -r -m -s /bin/bash -G 27 test1 </span><br></pre></td></tr></table></figure>
+
+<h2 id="4-修改时区和时间："><a href="#4-修改时区和时间：" class="headerlink" title="4.修改时区和时间："></a>4.修改时区和时间：</h2><ol>
+<li><p>首先查看时区：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">redtux@redtux-PC:~$ date -R</span><br><span class="line">Thu, 31 May 2018 00:03:22 +0800</span><br></pre></td></tr></table></figure></li>
+<li><p>修改时区，执行sudo tzselect，按提示选择时区.</p>
+</li>
+<li><p>复制文件到&#x2F;etc目录下 <code>sudo cp /usr/share/zoneinfo/Asia/Shanghai  /etc/localtime</code></p>
+</li>
+<li><p>更新时间  <code>sudo ntpdate time.windows.com</code></p>
+</li>
+</ol>
+<h2 id="5-搜索文件夹并删除"><a href="#5-搜索文件夹并删除" class="headerlink" title="5.搜索文件夹并删除"></a>5.搜索文件夹并删除</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">find ./* -name <span class="string">&quot;@eaDir&quot;</span> -<span class="built_in">type</span> d -print0 | xargs -0 <span class="built_in">rm</span> -rf</span><br></pre></td></tr></table></figure>
+
+<h2 id="6-gdisk硬盘分区工具"><a href="#6-gdisk硬盘分区工具" class="headerlink" title="6.gdisk硬盘分区工具"></a>6.gdisk硬盘分区工具</h2><p>gdisk是fdisk分区工具的GPT版，MBR分区格式只能支持最大2T的硬盘，大于2T的硬盘必须采用GPT格式，gdisk就是针对GPT格式的升级版。</p>
+<p>gdisk</p>
+<pre><code>  -l /dev/sdX 查看分区信息
+</code></pre>
+<p>gdisk</p>
+<pre><code>  (?|m) 帮助
+
+  n 建立分区
+
+  d 删除分区
+
+  c 更改分区名字
+</code></pre>
+<p>　   I 显示分区的详细信息</p>
+<pre><code>  p 显示分区信息
+
+  t 转换分区类型
+
+  a 将指定分区设置/取消 活动分区
+
+  l 查看分区类型
+
+  o 重建分区表
+
+  v 验证分区表，显示剩余没有被分区划分的扇区数量
+
+  q 退出不保存，不保存，所有的修改都不生效
+
+  w 退出并保存
+</code></pre>
+<p>执行<code>gdisk /dev/sdx</code>对sdx硬盘进行编辑，分区表编辑完成保存后，需要重新启动系统，否则系统内核还不知道硬盘分区已经改变了，这个时候你<code>ls /dev/sd*</code>查看到的分区情况还是编辑之前的。</p>
+<h2 id="7-blkid-列出所有分区的uuid"><a href="#7-blkid-列出所有分区的uuid" class="headerlink" title="7.blkid 列出所有分区的uuid"></a>7.blkid 列出所有分区的uuid</h2><p>硬盘根据插拔接口顺序不同可能是sda，也可能是sdb，这样重启后会不能正确的挂载所有的硬盘，为解决这个问题，UUID被文件系统设计者采用，使其可以持久唯一标识一个硬盘分区。其实方式很简单，就是在文件系统的超级块中使用128位存放UUID。这个UUID是在使用文件系统格式化分区时计算生成的，例如Linux下的文件系统工具mkfs就在格式化分区的同时，生成UUID并把它记录到超级块的固定区域中。</p>
+<p>使用mkfs对分区格式化后，会显示分区的uuid，如果我们没有记录下来后面怎么查呢，这个就要用到<code>blkid</code>工具了，他可以列出系统中所有硬盘分区的uuid。</p>
+<h2 id="8-rsync-远程同步工具"><a href="#8-rsync-远程同步工具" class="headerlink" title="8.rsync 远程同步工具"></a>8.rsync 远程同步工具</h2><p>rsync 是一个常用的 Linux 应用程序，用于文件同步。</p>
+<p>它可以在本地计算机与远程计算机之间，或者两个本地目录之间同步文件（但不支持两台远程计算机之间的同步）。它也可以当作文件复制工具，替代cp和mv命令。</p>
+<p>它名称里面的r指的是 remote，rsync 其实就是”远程同步”（remote sync）的意思。与其他文件传输工具（如 FTP 或 scp）不同，rsync 的最大特点是会检查发送方和接收方已有的文件，仅传输有变动的部分（默认规则是文件大小或修改时间有变动）。</p>
+<p><a target="_blank" rel="noopener" href="https://www.ruanyifeng.com/blog/2020/08/rsync.html">用法参考文章</a></p>
+<h3 id="r-参数"><a href="#r-参数" class="headerlink" title="-r 参数"></a>-r 参数</h3><p>本机使用 rsync 命令时，可以作为cp和mv命令的替代方法，将源目录同步到目标目录。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ rsync -r source destination</span><br></pre></td></tr></table></figure>
+
+<p>上面命令中，-r表示递归，即包含子目录。注意，-r是必须的，否则 rsync 运行不会成功。source目录表示源目录，destination表示目标目录。</p>
+<p>如果有多个文件或目录需要同步，可以写成下面这样。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ rsync -r source1 source2 destination</span><br></pre></td></tr></table></figure>
+
+<p>上面命令中，source1、source2都会被同步到destination目录。</p>
+<h3 id="a-参数"><a href="#a-参数" class="headerlink" title="-a 参数"></a>-a 参数</h3><p>-a参数可以替代-r，除了可以递归同步以外，还可以同步元信息（比如修改时间、权限等）。由于 rsync 默认使用文件大小和修改时间决定文件是否需要更新，所以-a比-r更有用。下面的用法才是常见的写法。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ rsync -a source destination</span><br></pre></td></tr></table></figure>
+
+<p>目标目录destination如果不存在，rsync 会自动创建。执行上面的命令后，源目录source被完整地复制到了目标目录destination下面，即形成了destination&#x2F;source的目录结构。</p>
+<p>如果只想同步源目录source里面的内容到目标目录destination，则需要在源目录后面加上斜杠。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ rsync -a source/ destination</span><br></pre></td></tr></table></figure>
+
+<p>上面命令执行后，source目录里面的内容，就都被复制到了destination目录里面，并不会在destination下面创建一个source子目录。</p>
+<h3 id="n-参数"><a href="#n-参数" class="headerlink" title="-n 参数"></a>-n 参数</h3><p>如果不确定 rsync 执行后会产生什么结果，可以先用-n或–dry-run参数模拟执行的结果。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ rsync -anv source/ destination</span><br></pre></td></tr></table></figure>
+
+<p>上面命令中，-n参数模拟命令执行的结果，并不真的执行命令。-v参数则是将结果输出到终端，这样就可以看到哪些内容会被同步。</p>
+<h3 id="–delete-参数"><a href="#–delete-参数" class="headerlink" title="–delete 参数"></a>–delete 参数</h3><p>默认情况下，rsync 只确保源目录的所有内容（明确排除的文件除外）都复制到目标目录。它不会使两个目录保持相同，并且不会删除文件。如果要使得目标目录成为源目录的镜像副本，则必须使用–delete参数，这将删除只存在于目标目录、不存在于源目录的文件。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ rsync -av --delete source/ destination</span><br></pre></td></tr></table></figure>
+
+<p>上面命令中，–delete参数会使得destination成为source的一个镜像。</p>
+<h3 id="–exclude-参数"><a href="#–exclude-参数" class="headerlink" title="–exclude 参数"></a>–exclude 参数</h3><p>有时，我们希望同步时排除某些文件或目录，这时可以用–exclude参数指定排除模式。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ rsync -av --exclude=&#x27;*.txt&#x27; source/ destination</span><br><span class="line"># 或者</span><br><span class="line">$ rsync -av --exclude &#x27;*.txt&#x27; source/ destination</span><br></pre></td></tr></table></figure>
+
+<p>上面命令排除了所有 TXT 文件。</p>
+<p>注意，rsync 会同步以”点”开头的隐藏文件，如果要排除隐藏文件，可以这样写–exclude&#x3D;”.*”。</p>
+<p>如果要排除某个目录里面的所有文件，但不希望排除目录本身，可以写成下面这样。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ rsync -av --exclude &#x27;dir1/*&#x27; source/ destination</span><br></pre></td></tr></table></figure>
+
+<p>多个排除模式，可以用多个–exclude参数。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ rsync -av --exclude &#x27;file1.txt&#x27; --exclude &#x27;dir1/*&#x27; source/ destination</span><br></pre></td></tr></table></figure>
+
+<p>多个排除模式也可以利用 Bash 的大扩号的扩展功能，只用一个–exclude参数。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ rsync -av --exclude=&#123;&#x27;file1.txt&#x27;,&#x27;dir1/*&#x27;&#125; source/ destination</span><br></pre></td></tr></table></figure>
+
+<p>如果排除模式很多，可以将它们写入一个文件，每个模式一行，然后用–exclude-from参数指定这个文件。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ rsync -av --exclude-from=&#x27;exclude-file.txt&#x27; source/ destination</span><br></pre></td></tr></table></figure>
+
+
+<h3 id="–include-参数"><a href="#–include-参数" class="headerlink" title="–include 参数"></a>–include 参数</h3><p>–include参数用来指定必须同步的文件模式，往往与–exclude结合使用。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ rsync -av --include=&quot;*.txt&quot; --exclude=&#x27;*&#x27; source/ destination</span><br></pre></td></tr></table></figure>
+
+<p>上面命令指定同步时，排除所有文件，但是会包括 TXT 文件。</p>
+<h3 id="增量备份"><a href="#增量备份" class="headerlink" title="增量备份"></a>增量备份</h3><p>rsync 的最大特点就是它可以完成增量备份，也就是默认只复制有变动的文件。</p>
+<p>除了源目录与目标目录直接比较，rsync 还支持使用基准目录，即将源目录与基准目录之间变动的部分，同步到目标目录。</p>
+<p>具体做法是，第一次同步是全量备份，所有文件在基准目录里面同步一份。以后每一次同步都是增量备份，只同步源目录与基准目录之间有变动的部分，将这部分保存在一个新的目标目录。这个新的目标目录之中，也是包含所有文件，但实际上，只有那些变动过的文件是存在于该目录，其他没有变动的文件都是指向基准目录文件的硬链接。</p>
+<p>–link-dest参数用来指定同步时的基准目录。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ rsync -a --delete --link-dest /compare/path /source/path /target/path</span><br></pre></td></tr></table></figure>
+
+<p>上面命令中，–link-dest参数指定基准目录&#x2F;compare&#x2F;path，然后源目录&#x2F;source&#x2F;path跟基准目录进行比较，找出变动的文件，将它们拷贝到目标目录&#x2F;target&#x2F;path。那些没变动的文件则会生成硬链接。这个命令的第一次备份时是全量备份，后面就都是增量备份了。</p>
+<p>下面是一个脚本示例，备份用户的主目录。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">#!/bin/bash</span><br><span class="line"></span><br><span class="line"># A script to perform incremental backups using rsync</span><br><span class="line"></span><br><span class="line">set -o errexit</span><br><span class="line">set -o nounset</span><br><span class="line">set -o pipefail</span><br><span class="line"></span><br><span class="line">readonly SOURCE_DIR=&quot;$&#123;HOME&#125;&quot;</span><br><span class="line">readonly BACKUP_DIR=&quot;/mnt/data/backups&quot;</span><br><span class="line">readonly DATETIME=&quot;$(date &#x27;+%Y-%m-%d_%H:%M:%S&#x27;)&quot;</span><br><span class="line">readonly BACKUP_PATH=&quot;$&#123;BACKUP_DIR&#125;/$&#123;DATETIME&#125;&quot;</span><br><span class="line">readonly LATEST_LINK=&quot;$&#123;BACKUP_DIR&#125;/latest&quot;</span><br><span class="line"></span><br><span class="line">mkdir -p &quot;$&#123;BACKUP_DIR&#125;&quot;</span><br><span class="line"></span><br><span class="line">rsync -av --delete \</span><br><span class="line">  &quot;$&#123;SOURCE_DIR&#125;/&quot; \</span><br><span class="line">  --link-dest &quot;$&#123;LATEST_LINK&#125;&quot; \</span><br><span class="line">  --exclude=&quot;.cache&quot; \</span><br><span class="line">  &quot;$&#123;BACKUP_PATH&#125;&quot;</span><br><span class="line"></span><br><span class="line">rm -rf &quot;$&#123;LATEST_LINK&#125;&quot;</span><br><span class="line">ln -s &quot;$&#123;BACKUP_PATH&#125;&quot; &quot;$&#123;LATEST_LINK&#125;&quot;</span><br></pre></td></tr></table></figure>
+
+<p>上面脚本中，每一次同步都会生成一个新目录<code>$&#123;BACKUP_DIR&#125;/$&#123;DATETIME&#125;</code>，并将软链接<code>$&#123;BACKUP_DIR&#125;/latest</code>指向这个目录。下一次备份时，就将<code>$&#123;BACKUP_DIR&#125;/latest</code>作为基准目录，生成新的备份目录。最后，再将软链接<code>$&#123;BACKUP_DIR&#125;/latest</code>指向新的备份目录。</p>
+</div><div class="article-licensing box"><div class="licensing-title"><p>Ubuntu Server 常用管理</p><p><a href="http://tux.red/2023/08/18/ubuntu-server/">http://tux.red/2023/08/18/ubuntu-server/</a></p></div><div class="licensing-meta level is-mobile"><div class="level-left"><div class="level-item is-narrow"><div><h6>作者</h6><p>redtux</p></div></div><div class="level-item is-narrow"><div><h6>发布于</h6><p>2023-08-18</p></div></div><div class="level-item is-narrow"><div><h6>更新于</h6><p>2023-08-18</p></div></div><div class="level-item is-narrow"><div><h6>许可协议</h6><p><a class="icons" rel="noopener" target="_blank" title="Creative Commons" href="https://creativecommons.org/"><i class="icon fab fa-creative-commons"></i></a><a class="icons" rel="noopener" target="_blank" title="Attribution" href="https://creativecommons.org/licenses/by/4.0/"><i class="icon fab fa-creative-commons-by"></i></a><a class="icons" rel="noopener" target="_blank" title="Noncommercial" href="https://creativecommons.org/licenses/by-nc/4.0/"><i class="icon fab fa-creative-commons-nc"></i></a></p></div></div></div></div></div><div class="notification is-danger">You need to set <code>install_url</code> to use ShareThis. Please set it in <code>_config.yml</code>.</div></article></div><div class="card"><div class="card-content"><h3 class="menu-label has-text-centered">喜欢这篇文章？打赏一下作者吧</h3><div class="buttons is-centered"><a class="button donate" href="/" target="_blank" rel="noopener" data-type="afdian"><span class="icon is-small"><i class="fas fa-charging-station"></i></span><span>爱发电</span></a><a class="button donate" data-type="alipay"><span class="icon is-small"><i class="fab fa-alipay"></i></span><span>支付宝</span><span class="qrcode"><img src="/" alt="支付宝"></span></a><a class="button donate" href="/" target="_blank" rel="noopener" data-type="buymeacoffee"><span class="icon is-small"><i class="fas fa-coffee"></i></span><span>送我杯咖啡</span></a><a class="button donate" href="/" target="_blank" rel="noopener" data-type="patreon"><span class="icon is-small"><i class="fab fa-patreon"></i></span><span>Patreon</span></a><div class="notification is-danger">You forgot to set the <code>business</code> or <code>currency_code</code> for Paypal. Please set it in <code>_config.yml</code>.</div><a class="button donate" data-type="wechat"><span class="icon is-small"><i class="fab fa-weixin"></i></span><span>微信</span><span class="qrcode"><img src="/" alt="微信"></span></a></div></div></div><nav class="post-navigation mt-4 level is-mobile"><div class="level-end"><a class="article-nav-next level level-item link-muted" href="/2023/08/15/Nas/nextcloud/"><span class="level-item">自建Nextcloud私有云盘</span><i class="level-item fas fa-chevron-right"></i></a></div></nav><div class="card"><div class="card-content"><h3 class="title is-5">评论</h3><div class="notification is-danger">You forgot to set the <code>shortname</code> for Disqus. Please set it in <code>_config.yml</code>.</div></div></div></div><div class="column column-left is-4-tablet is-4-desktop is-4-widescreen  order-1"><div class="card widget" data-type="profile"><div class="card-content"><nav class="level"><div class="level-item has-text-centered flex-shrink-1"><div><figure class="image is-128x128 mx-auto mb-2"><img class="avatar" src="/img/avatar.png" alt="胡乱折腾"></figure><p class="title is-size-4 is-block" style="line-height:inherit;">胡乱折腾</p><p class="is-size-6 is-block">生命不息，折腾不止！</p><p class="is-size-6 is-flex justify-content-center"><i class="fas fa-map-marker-alt mr-1"></i><span>China</span></p></div></div></nav><nav class="level is-mobile"><div class="level-item has-text-centered is-marginless"><div><p class="heading">文章</p><a href="/archives"><p class="title">23</p></a></div></div><div class="level-item has-text-centered is-marginless"><div><p class="heading">分类</p><a href="/categories"><p class="title">3</p></a></div></div><div class="level-item has-text-centered is-marginless"><div><p class="heading">标签</p><a href="/tags"><p class="title">7</p></a></div></div></nav><div class="level"><a class="level-item button is-primary is-rounded" href="https://github.com/tux0529" target="_blank" rel="noopener">关注我</a></div><div class="level is-mobile is-multiline"><a class="level-item button is-transparent is-marginless" target="_blank" rel="noopener" title="Github" href="https://github.com/tux0529"><i class="fab fa-github"></i></a><a class="level-item button is-transparent is-marginless" target="_blank" rel="noopener" title="Facebook" href="https://facebook.com"><i class="fab fa-facebook"></i></a><a class="level-item button is-transparent is-marginless" target="_blank" rel="noopener" title="Twitter" href="https://twitter.com"><i class="fab fa-twitter"></i></a><a class="level-item button is-transparent is-marginless" target="_blank" rel="noopener" title="Dribbble" href="https://dribbble.com"><i class="fab fa-dribbble"></i></a><a class="level-item button is-transparent is-marginless" target="_blank" rel="noopener" title="RSS" href="/"><i class="fas fa-rss"></i></a></div></div></div><!--!--><div class="card widget" data-type="links"><div class="card-content"><div class="menu"><h3 class="menu-label">链接</h3><ul class="menu-list"><li><a class="level is-mobile" href="https://hexo.io" target="_blank" rel="noopener"><span class="level-left"><span class="level-item">Hexo</span></span><span class="level-right"><span class="level-item tag">hexo.io</span></span></a></li><li><a class="level is-mobile" href="https://bulma.io" target="_blank" rel="noopener"><span class="level-left"><span class="level-item">Bulma</span></span><span class="level-right"><span class="level-item tag">bulma.io</span></span></a></li></ul></div></div></div><div class="card widget" data-type="categories"><div class="card-content"><div class="menu"><h3 class="menu-label">分类</h3><ul class="menu-list"><li><a class="level is-mobile" href="/categories/Qt/"><span class="level-start"><span class="level-item">Qt</span></span><span class="level-end"><span class="level-item tag">4</span></span></a></li><li><a class="level is-mobile" href="/categories/Ubuntu2Nas/"><span class="level-start"><span class="level-item">Ubuntu2Nas</span></span><span class="level-end"><span class="level-item tag">12</span></span></a></li><li><a class="level is-mobile" href="/categories/%E5%A4%87%E5%BF%98%E5%BD%95/"><span class="level-start"><span class="level-item">备忘录</span></span><span class="level-end"><span class="level-item tag">7</span></span></a></li></ul></div></div></div><div class="card widget" data-type="recent-posts"><div class="card-content"><h3 class="menu-label">最新文章</h3><article class="media"><div class="media-content"><p class="date"><time dateTime="2023-08-18T08:46:25.000Z">2023-08-18</time></p><p class="title"><a href="/2023/08/18/ubuntu-server/">Ubuntu Server 常用管理</a></p><p class="categories"><a href="/categories/%E5%A4%87%E5%BF%98%E5%BD%95/">备忘录</a></p></div></article><article class="media"><div class="media-content"><p class="date"><time dateTime="2023-08-15T08:30:00.000Z">2023-08-15</time></p><p class="title"><a href="/2023/08/15/Nas/nextcloud/">自建Nextcloud私有云盘</a></p><p class="categories"><a href="/categories/Ubuntu2Nas/">Ubuntu2Nas</a></p></div></article><article class="media"><div class="media-content"><p class="date"><time dateTime="2023-08-14T04:10:00.000Z">2023-08-14</time></p><p class="title"><a href="/2023/08/14/windows-office-kms/">Microsoft Office及Windows的KMS激活步骤</a></p><p class="categories"><a href="/categories/%E5%A4%87%E5%BF%98%E5%BD%95/">备忘录</a></p></div></article><article class="media"><div class="media-content"><p class="date"><time dateTime="2023-08-06T14:23:36.000Z">2023-08-06</time></p><p class="title"><a href="/2023/08/06/Qt/qt-pop-dialog/">Qt实现弹出窗口，点击其他位置消失</a></p><p class="categories"><a href="/categories/Qt/">Qt</a></p></div></article><article class="media"><div class="media-content"><p class="date"><time dateTime="2023-08-06T14:19:36.000Z">2023-08-06</time></p><p class="title"><a href="/2023/08/06/Qt/qt-os-define/">Qt的宏定义区分不同操作系统</a></p><p class="categories"><a href="/categories/Qt/">Qt</a></p></div></article></div></div><div class="card widget" data-type="archives"><div class="card-content"><div class="menu"><h3 class="menu-label">归档</h3><ul class="menu-list"><li><a class="level is-mobile" href="/archives/2023/08/"><span class="level-start"><span class="level-item">八月 2023</span></span><span class="level-end"><span class="level-item tag">19</span></span></a></li><li><a class="level is-mobile" href="/archives/2022/08/"><span class="level-start"><span class="level-item">八月 2022</span></span><span class="level-end"><span class="level-item tag">3</span></span></a></li><li><a class="level is-mobile" href="/archives/2018/02/"><span class="level-start"><span class="level-item">二月 2018</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li></ul></div></div></div><div class="card widget" data-type="tags"><div class="card-content"><div class="menu"><h3 class="menu-label">标签</h3><div class="field is-grouped is-grouped-multiline"><div class="control"><a class="tags has-addons" href="/tags/Nas%E5%B7%A5%E5%85%B7/"><span class="tag">Nas工具</span><span class="tag">12</span></a></div><div class="control"><a class="tags has-addons" href="/tags/Qt/"><span class="tag">Qt</span><span class="tag">4</span></a></div><div class="control"><a class="tags has-addons" href="/tags/Skills/"><span class="tag">Skills</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/ffmpeg/"><span class="tag">ffmpeg</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/kms%E6%BF%80%E6%B4%BB/"><span class="tag">kms激活</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/macOS/"><span class="tag">macOS</span><span class="tag">2</span></a></div><div class="control"><a class="tags has-addons" href="/tags/web/"><span class="tag">web</span><span class="tag">1</span></a></div></div></div></div></div></div><!--!--></div></div></section><footer class="footer"><div class="container"><div class="level"><div class="level-start"><a class="footer-logo is-block mb-2" href="/"><img src="/img/logo.svg" alt="胡乱折腾" height="28"></a><p class="is-size-7"><span>&copy; 2023 redtux</span>  Powered by <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a> &amp; <a href="https://github.com/ppoffice/hexo-theme-icarus" target="_blank" rel="noopener">Icarus</a></p></div><div class="level-end"><div class="field has-addons"><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="Creative Commons" href="https://creativecommons.org/"><i class="fab fa-creative-commons"></i></a></p><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="Attribution 4.0 International" href="https://creativecommons.org/licenses/by/4.0/"><i class="fab fa-creative-commons-by"></i></a></p><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="Download on GitHub" href="https://github.com/ppoffice/hexo-theme-icarus"><i class="fab fa-github"></i></a></p></div></div></div></div></footer><script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/moment@2.22.2/min/moment-with-locales.min.js"></script><script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.4/dist/clipboard.min.js" defer></script><script>moment.locale("zh-CN");</script><script>var IcarusThemeSettings = {
+            article: {
+                highlight: {
+                    clipboard: true,
+                    fold: 'unfolded'
+                }
+            }
+        };</script><script src="/js/column.js"></script><script src="/js/animation.js"></script><a id="back-to-top" title="回到顶端" href="javascript:;"><i class="fas fa-chevron-up"></i></a><script src="/js/back_to_top.js" defer></script><!--!--><!--!--><!--!--><script src="https://cdn.jsdelivr.net/npm/cookieconsent@3.1.1/build/cookieconsent.min.js" defer></script><script>window.addEventListener("load", () => {
+      window.cookieconsent.initialise({
+        type: "info",
+        theme: "edgeless",
+        static: false,
+        position: "bottom-left",
+        content: {
+          message: "此网站使用Cookie来改善您的体验。",
+          dismiss: "知道了！",
+          allow: "允许使用Cookie",
+          deny: "拒绝",
+          link: "了解更多",
+          policy: "Cookie政策",
+          href: "https://www.cookiesandyou.com/",
+        },
+        palette: {
+          popup: {
+            background: "#edeff5",
+            text: "#838391"
+          },
+          button: {
+            background: "#4b81e8"
+          },
+        },
+      });
+    });</script><script src="https://cdn.jsdelivr.net/npm/lightgallery@1.10.0/dist/js/lightgallery.min.js" defer></script><script src="https://cdn.jsdelivr.net/npm/justifiedGallery@3.8.1/dist/js/jquery.justifiedGallery.min.js" defer></script><script>window.addEventListener("load", () => {
+            if (typeof $.fn.lightGallery === 'function') {
+                $('.article').lightGallery({ selector: '.gallery-item' });
+            }
+            if (typeof $.fn.justifiedGallery === 'function') {
+                if ($('.justified-gallery > p > .gallery-item').length) {
+                    $('.justified-gallery > p > .gallery-item').unwrap();
+                }
+                $('.justified-gallery').justifiedGallery();
+            }
+        });</script><!--!--><!--!--><!--!--><!--!--><!--!--><script src="/js/main.js" defer></script><div class="searchbox"><div class="searchbox-container"><div class="searchbox-header"><div class="searchbox-input-container"><input class="searchbox-input" type="text" placeholder="想要查找什么..."></div><a class="searchbox-close" href="javascript:;">×</a></div><div class="searchbox-body"></div></div></div><script src="/js/insight.js" defer></script><script>document.addEventListener('DOMContentLoaded', function () {
+            loadInsight({"contentUrl":"/content.json"}, {"hint":"想要查找什么...","untitled":"(无标题)","posts":"文章","pages":"页面","categories":"分类","tags":"标签"});
+        });</script></body></html>
