@@ -373,7 +373,7 @@
 <p>在nginx.conf中添加如下代码，参考<a target="_blank" rel="noopener" href="https://www.cnblogs.com/kevingrace/p/6094007.html">更多nginx优化</a></p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">#使用共享内存做临时存贮提高上传速度，共享内存需要大一些，否则上传大文件内存不足</span><br><span class="line">client_body_in_file_only clean;</span><br><span class="line">client_body_temp_path /dev/shm 1 2;</span><br><span class="line">fastcgi_param  REQUEST_BODY_FILE  $request_body_file;</span><br></pre></td></tr></table></figure>
 
-</div></article></div><div class="card"><article class="card-content article" role="article"><div class="article-meta is-size-7 is-uppercase level is-mobile"><div class="level-left"><span class="level-item"><time dateTime="2023-08-05T02:07:36.000Z" title="2023/8/5 10:07:36">2023-08-05</time>发表</span><span class="level-item"><time dateTime="2023-11-06T13:47:47.000Z" title="2023/11/6 21:47:47">2023-11-06</time>更新</span><span class="level-item"><a class="link-muted" href="/categories/Ubuntu2Nas/">Ubuntu2Nas</a></span><span class="level-item">8 分钟读完 (大约1258个字)</span></div></div><h1 class="title is-3 is-size-4-mobile"><a class="link-muted" href="/2023/08/05/Nas/docker-docker-compose/">安装docker及docker-compose</a></h1><div class="content"><h2 id="卸载旧版本"><a href="#卸载旧版本" class="headerlink" title="卸载旧版本"></a>卸载旧版本</h2><p>在你安装docker之前一定要把系统中的旧版本卸载掉，一半系统发行商在官方apt源中带有docker，但是不是最新版的，如果你是全新安装的系统，你还没有安装过docker，那就可以省掉这一步。</p>
+</div></article></div><div class="card"><article class="card-content article" role="article"><div class="article-meta is-size-7 is-uppercase level is-mobile"><div class="level-left"><span class="level-item"><time dateTime="2023-08-05T02:07:36.000Z" title="2023/8/5 10:07:36">2023-08-05</time>发表</span><span class="level-item"><time dateTime="2024-03-05T12:15:55.000Z" title="2024/3/5 20:15:55">2024-03-05</time>更新</span><span class="level-item"><a class="link-muted" href="/categories/Ubuntu2Nas/">Ubuntu2Nas</a></span><span class="level-item">10 分钟读完 (大约1426个字)</span></div></div><h1 class="title is-3 is-size-4-mobile"><a class="link-muted" href="/2023/08/05/Nas/docker-docker-compose/">安装docker及docker-compose</a></h1><div class="content"><h2 id="卸载旧版本"><a href="#卸载旧版本" class="headerlink" title="卸载旧版本"></a>卸载旧版本</h2><p>在你安装docker之前一定要把系统中的旧版本卸载掉，一半系统发行商在官方apt源中带有docker，但是不是最新版的，如果你是全新安装的系统，你还没有安装过docker，那就可以省掉这一步。</p>
 <p>需要卸载掉的非官方包包括:</p>
 <ul>
 <li>docker.io</li>
@@ -437,6 +437,15 @@
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo rm -rf /var/lib/docker</span><br><span class="line">sudo rm -rf /var/lib/containerd</span><br></pre></td></tr></table></figure>
 
 <p>You have to delete any edited configuration files manually.</p>
+<h2 id="Docker服务控制"><a href="#Docker服务控制" class="headerlink" title="Docker服务控制"></a>Docker服务控制</h2><p>停止Docker服务</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">systemctl stop docker</span><br></pre></td></tr></table></figure>
+
+<p>启动Docker服务</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">systemctl start docker</span><br></pre></td></tr></table></figure>
+
+<p>重新启动Docker服务</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">systemctl restart docker</span><br></pre></td></tr></table></figure>
+
 <h2 id="Docker常用命令"><a href="#Docker常用命令" class="headerlink" title="Docker常用命令"></a>Docker常用命令</h2><ul>
 <li>docker start : 启动一个容器</li>
 <li>docker restart : 重新启动一个容器</li>
@@ -471,6 +480,17 @@
 <p>{“5432&#x2F;tcp”:[{“HostIp”:””,”HostPort”:”5432”}]}</p>
 <p>6、修改config.v2.json在ExposedPorts中加上要暴露的端口  # 格式如：”{容器内部端口}&#x2F;tcp”:{}  “ExposedPorts”:{“22&#x2F;tcp”:{},”80&#x2F;tcp”:{}} </p>
 <p>{“5432&#x2F;tcp”:{}}</p>
+<h2 id="修改docker镜像源"><a href="#修改docker镜像源" class="headerlink" title="修改docker镜像源"></a>修改docker镜像源</h2><p>镜像源参考<br>中国区官方镜像：<a target="_blank" rel="noopener" href="https://registry.docker-cn.com/">https://registry.docker-cn.com</a><br>中科大源：<a target="_blank" rel="noopener" href="https://docker.mirrors.ustc.edu.cn/">https://docker.mirrors.ustc.edu.cn</a><br>阿里源：<a target="_blank" rel="noopener" href="https://cr.console.aliyun.com/">https://cr.console.aliyun.com</a><br>腾讯源：<a target="_blank" rel="noopener" href="https://mirror.ccs.tencentyun.com/">https://mirror.ccs.tencentyun.com</a><br>网易源：<a target="_blank" rel="noopener" href="http://hub-mirror.c.163.com/">http://hub-mirror.c.163.com</a></p>
+<p>1、关闭 Docker 服务</p>
+<p>2、修改配置文件</p>
+<p>创建或修改<code>/etc/docker/daemon.json</code>文件，<br>默认没有daemon文件，先创建。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vim /etc/docker/daemon.json</span><br></pre></td></tr></table></figure>
+
+<p>增加&#x2F;更新”registry-mirrors”字段</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    &quot;registry-mirrors&quot;: [ </span><br><span class="line">        &quot;https://docker.mirrors.ustc.edu.cn&quot; </span><br><span class="line">    ]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>注：需确认”daemon.json”的位置。</p>
+<p>3、重启 Docker 服务</p>
 </div></article></div><div class="card"><article class="card-content article" role="article"><div class="article-meta is-size-7 is-uppercase level is-mobile"><div class="level-left"><span class="level-item"><time dateTime="2023-08-05T02:01:36.000Z" title="2023/8/5 10:01:36">2023-08-05</time>发表</span><span class="level-item"><time dateTime="2023-08-05T02:05:22.000Z" title="2023/8/5 10:05:22">2023-08-05</time>更新</span><span class="level-item"><a class="link-muted" href="/categories/Ubuntu2Nas/">Ubuntu2Nas</a></span><span class="level-item">几秒读完 (大约66个字)</span></div></div><h1 class="title is-3 is-size-4-mobile"><a class="link-muted" href="/2023/08/05/Nas/remove-snap/">删除系统自带的snap</a></h1><div class="content"><p>snap list可以查看已经安装的包，默认带的组件是core、lxd、snapd。</p>
 <p>删除一个snap包</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo snap remove docker</span><br></pre></td></tr></table></figure>
